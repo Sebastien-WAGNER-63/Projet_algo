@@ -2,6 +2,6 @@ include"projet.h"
 
 int main (void)
 {
-  global(void);
+  global();
   return 0;
 }
