@@ -1,4 +1,4 @@
-include"projet.c"
+include"projet.h"
 
 int main (void)
 {
