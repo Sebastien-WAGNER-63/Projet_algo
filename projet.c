@@ -3,3 +3,8 @@
 #include "tp10.h"
 #include <math.h>
 #include <string.h>
+
+void global(void)
+{
+  
+}
