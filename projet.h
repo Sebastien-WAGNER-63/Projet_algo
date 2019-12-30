@@ -51,3 +51,4 @@ typedef struct{
 }DemandeA;
 
 void global(void);
+
