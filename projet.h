@@ -13,7 +13,7 @@ typedef enum{
 //Different types de civilité
 typedef enum{
   Mr, Mme
-}Civilité;
+}Civilite;
 
 //Structure des logements
 typedef struct{
@@ -31,7 +31,7 @@ typedef struct{
 typedef struct{
   // Forme de idEtud : 'E00001','E00002'...
   char idEtud[6];
-  Civilité civilité;
+  Civilite civilite;
   char *nom;
   char *prenom;
   Booleen bourse;

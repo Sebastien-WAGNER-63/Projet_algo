@@ -1,4 +1,5 @@
-include"projet.h"
+//gcc *.c -o projet
+#include "projet.h"
 
 int main (void)
 {
