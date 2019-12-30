@@ -50,5 +50,42 @@ typedef struct{
   Typelog type;
 }DemandeA;
 
-void global(void);
+//Liste de Logement
+typedef struct maillLog{
+  Logement logement;
+  struct maillLog *suiv;
+}MaillLog, *ListLog;
 
+//Liste d'étudiant
+typedef struct maillEtud{
+  Etudiant etudiant;
+  struct maillEtud *suiv;
+}MaillEtud, *ListEtud;
+
+//Liste de demande
+typedef struct maillDemande{
+  DemandeA demande;
+  struct maillDemande *suiv;
+}MaillDemande, *ListDemande;
+
+void global(void);
+//1
+void fChargementFic(ListLog logement, ListEtud etud, ListDemande demande);
+//2
+void fAffichageLogTri(ListLog logement);
+//3
+void fAffichageLogOcc(ListLog logement);
+//4
+void fAffichageLogAtt(ListDemande demande);
+//5
+void fTraitementDem(ListDemande demande,ListLog logement,ListEtud etud);
+//6
+void fAddDemandeLog(ListDemande demande,ListEtud etud);
+void fAddEtud(ListEtud etud);
+void fEnregGemande(ListDemande demande,DemandeA demandeA);
+//7
+void fAnnulDemande(ListDemande demande);
+//8
+void fDepartEtud(ListLog logement);
+//9
+void fSauvegarde(ListDemande demande, ListLog logement, ListEtud etud);
