@@ -69,23 +69,23 @@ typedef struct maillDemande{
 }MaillDemande, *ListDemande;
 
 void global(void);
-//1
+//Q1
 void fChargementFic(ListLog logement, ListEtud etud, ListDemande demande);
-//2
+//Q2
 void fAffichageLogTri(ListLog logement);
-//3
+//Q3
 void fAffichageLogOcc(ListLog logement);
-//4
+//Q4
 void fAffichageLogAtt(ListDemande demande);
-//5
+//Q5
 void fTraitementDem(ListDemande demande,ListLog logement,ListEtud etud);
-//6
+//Q6
 void fAddDemandeLog(ListDemande demande,ListEtud etud);
 void fAddEtud(ListEtud etud);
 void fEnregGemande(ListDemande demande,DemandeA demandeA);
-//7
+//Q7
 void fAnnulDemande(ListDemande demande);
-//8
+//Q8
 void fDepartEtud(ListLog logement);
-//9
+//Q9
 void fSauvegarde(ListDemande demande, ListLog logement, ListEtud etud);
