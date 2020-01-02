@@ -1,12 +1,18 @@
-Liste listenouv (void){
+#include<stdio.h>
+#include<stdlib.h>
+#include <math.h>
+#include <string.h>
+#include "fonctionsListe.h"
+
+Liste listenouv(void){
 	Liste l;
 	l=NULL;
 	return l;
 }
 
-Liste insererEnTete (Liste l, int x){
-	maillon *m;
-	m=(maillon *) malloc (sizeof(maillon));
+Liste insererEnTete(Liste l, int x){
+	Maillon *m;
+	m=(Maillon *) malloc (sizeof(Maillon));
 	if(m==NULL){
 		printf("Pb malloc\n");
 		exit(1);
@@ -16,14 +22,14 @@ Liste insererEnTete (Liste l, int x){
 	return m;
 }
 
-Booleen vide (Liste l){
+Booleen vide(Liste l){
 	if(l==NULL)
 		return vrai;
 	return faux;
 }
 
 //version it
-void affichageListeIt (Liste l){
+void affichageListeIt(Liste l){
 	while(!vide(l)){
 		printf("%d",l->v);
 		l=l->suiv;
@@ -32,7 +38,7 @@ void affichageListeIt (Liste l){
 }
 
 //version rec
-void affichageListeRec (Liste l){
+void affichageListeRec(Liste l){
 	if(vide(l)){
 		printf("\n");
 		return;
@@ -50,7 +56,7 @@ int tete (Liste l){
 }
 
 //version it
-int longueurIt (Liste l){
+int longueurIt(Liste l){
 	int cpt=0;
 	while(!vide(l)){
 		cpt++;
@@ -60,13 +66,13 @@ int longueurIt (Liste l){
 }
 
 //version rec
-int longueurRec (Liste l){
+int longueurRec(Liste l){
 	if(vide(l))
 		return 0;
 	return 1 + longueurRec(l->suiv);
 }
 
-Booleen existe (Liste l, int x){
+Booleen existe(Liste l, int x){
 	if(vide(l))
 		return faux;
 	if(x<tete(l)) //que si la liste est triée
@@ -76,8 +82,8 @@ Booleen existe (Liste l, int x){
 	return existe(l->suiv,x);
 }
 
-Liste supprimerEnTete (Liste l){
-	maillon *m;
+Liste supprimerEnTete(Liste l){
+	Maillon *m;
 	if(vide(l)){
 		printf("opération interdite\n");
 		exit(0);
@@ -88,7 +94,7 @@ Liste supprimerEnTete (Liste l){
 	return l;
 }
 
-Liste insertion (Liste l, int x){
+Liste insertion(Liste l, int x){
 	if(vide(l))
 		return insererEnTete(l,x);
 	if(x<tete(l))
@@ -99,18 +105,18 @@ Liste insertion (Liste l, int x){
 	return l;
 }
 
-Liste supprimer (Liste l, int x){
+Liste supprimer(Liste l, int x){
 	if(vide(l))
 		return l;
 	if(x<tete(l))
 		return l;
 	if(x==tete(l))
-		return supprimerEnTete(l):
+		return supprimerEnTete(l);
 	l->suiv=supprimer(l->suiv,x);
 	return l;
 }
 
-liste insertionEnQueu (Liste l, int x){
+Liste insertionEnQueu(Liste l, int x){
 	if(vide(l))
 		return insererEnTete(l,x);
 	l->suiv=insertionEnQueu(l->suiv,x);

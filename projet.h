@@ -1,14 +1,11 @@
 #include <stdio.h>
+#include "fonctionsListe.h"
+
 
 //Different types de logements
 typedef enum{
   chambre, studio, T1, T2
 }Typelog;
-
-//Type Booléen
-typedef enum{
-  false, true
-}Booleen;
 
 //Different types de civilité
 typedef enum{
