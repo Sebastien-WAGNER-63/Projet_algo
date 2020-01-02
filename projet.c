@@ -3,7 +3,7 @@
 #include "projet.h"
 #include <math.h>
 #include <string.h>
-#include "fonctionliste.c"
+#include "fonctionsListe.c"
 
 void global(void)
 {
