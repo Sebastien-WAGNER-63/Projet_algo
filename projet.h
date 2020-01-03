@@ -1,17 +1,6 @@
 #include <stdio.h>
 #include "fonctionsListe.h"
 
-
-//Different types de logements
-typedef enum{
-  chambre, studio, T1, T2
-}Typelog;
-
-//Different types de civilité
-typedef enum{
-  Mr, Mme
-}Civilite;
-
 //Structure des logements
 typedef struct{
   // Forme de idLogement : 'L00001','L00002'...
@@ -75,7 +64,7 @@ void fAffichageLogOcc(ListLog logement);
 //Q4
 void fAffichageLogAtt(ListDemande demande);
 //Q5
-void fTraitementDem(ListDemande demande,ListLog logement,ListEtud etud);
+void fTraitementDem(Liste demande,Liste logement,Liste etud);
 //Q6
 void fAddDemandeLog(ListDemande demande,ListEtud etud);
 void fAddEtud(ListEtud etud);

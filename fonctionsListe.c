@@ -10,14 +10,14 @@ Liste listenouv(void){
 	return l;
 }
 
-Liste insererEnTete(Liste l, int x){
+Liste insererEnTete(Liste l, void *data){
 	Maillon *m;
 	m=(Maillon *) malloc (sizeof(Maillon));
 	if(m==NULL){
 		printf("Pb malloc\n");
 		exit(1);
 	}
-	m->v=x;
+	m->data=data;
 	m->suiv=l;
 	return m;
 }
@@ -28,32 +28,58 @@ Booleen vide(Liste l){
 	return faux;
 }
 
+
 //version it
-void affichageListeIt(Liste l){
+void affichageListeIt(Liste l,Type type){
 	while(!vide(l)){
-		printf("%d",l->v);
+		if(type==entier)
+			printf("%d\n",*(int*)l->data);
+		if(type==flotant)
+			printf("%.2f\n",*(float*)l->data);
+		if(type==carac)
+			printf("%s\n",(char*)l->data);
+		if(type==booleen)
+			printf("%d\n",*(Booleen*)l->data);
+		if(type==typeLog)
+			printf("%d\n",*(Typelog*)l->data);
+		if(type==civilite)
+			printf("%d\n",*(Civilite*)l->data);
 		l=l->suiv;
 	}
-	printf("\n");
 }
 
+
+/*
 //version rec
-void affichageListeRec(Liste l){
+void affichageListeRec(Liste l,Type type){
 	if(vide(l)){
 		printf("\n");
 		return;
 	}
-	printf("%d",l->v);
+	if(type==entier)
+		printf("%d",*(int*)l->data);
+	if(type==flotant)
+		printf("%.2f",*(float*)l->data);
+	if(type==carac)
+		printf("%s",(char*)l->data);
+	if(type==booleen)
+		printf("%d\n",*(Booleen*)l->data);
+	if(type==typeLog)
+		printf("%d\n",*(Typelog*)l->data);
+	if(type==civilite)
+		printf("%d\n",*(Civilite*)l->data);
 	affichageListeRec(l->suiv);
 }
+*/
 
-int tete (Liste l){
+void *tete (Liste l){
 	if(vide(l)){
 		printf("opperation interdite\n");
 		exit(1);
 	}
-	return l->v;
+	return l->data;
 }
+
 
 //version it
 int longueurIt(Liste l){
@@ -65,21 +91,56 @@ int longueurIt(Liste l){
 	return cpt;
 }
 
+
+/*
 //version rec
 int longueurRec(Liste l){
 	if(vide(l))
 		return 0;
 	return 1 + longueurRec(l->suiv);
 }
+*/
 
-Booleen existe(Liste l, int x){
+Booleen existe(Liste l, void* data, Type type){
 	if(vide(l))
 		return faux;
-	if(x<tete(l)) //que si la liste est triée
-		return faux;
-	if (x==tete(l))
-		return vrai;
-	return existe(l->suiv,x);
+	if(type==entier){
+		if(*(int*)data<*(int*)tete(l)) //que si la liste est triée
+			return faux;
+		if (*(int*)data==*(int*)tete(l))
+			return vrai;
+	}
+	if(type==flotant){
+		if(*(float*)data<*(float*)tete(l)) //que si la liste est triée
+			return faux;
+		if (*(float*)data==*(float*)tete(l))
+			return vrai;
+	}
+	if(type==carac){
+		if(strcmp((char*)data,(char*)tete(l))<0) //que si la liste est triée
+			return faux;
+		if (strcmp((char*)data,(char*)tete(l))==0)
+			return vrai;
+	}
+	if(type==booleen){
+		if(*(Booleen*)data<*(Booleen*)tete(l)) //que si la liste est triée
+			return faux;
+		if (*(Booleen*)data==*(Booleen*)tete(l))
+			return vrai;
+	}
+	if(type==typeLog){
+		if(*(Typelog*)data<*(Typelog*)tete(l)) //que si la liste est triée
+			return faux;
+		if (*(Typelog*)data==*(Typelog*)tete(l))
+			return vrai;
+	}
+	if(type==civilite){
+		if(*(Civilite*)data<*(Civilite*)tete(l)) //que si la liste est triée
+			return faux;
+		if (*(Civilite*)data==*(Civilite*)tete(l))
+			return vrai;
+	}
+	return existe(l->suiv,data,type);
 }
 
 Liste supprimerEnTete(Liste l){
@@ -94,32 +155,96 @@ Liste supprimerEnTete(Liste l){
 	return l;
 }
 
-Liste insertion(Liste l, int x){
+Liste insertion(Liste l, void* data, Type type){
 	if(vide(l))
-		return insererEnTete(l,x);
-	if(x<tete(l))
-		return insererEnTete(l,x);
-	if(x==tete(l))
-		return l;
-	l->suiv=insertion(l->suiv,x);
+		return insererEnTete(l,data);
+	if(type==entier){
+		if(*(int*)data<*(int*)tete(l))
+			return insererEnTete(l,data);
+		if(*(int*)data==*(int*)tete(l))
+			return l;
+	}
+	if(type==flotant){
+		if(*(float*)data<*(float*)tete(l))
+			return insererEnTete(l,data);
+		if(*(float*)data==*(float*)tete(l))
+			return l;
+	}
+	if(type==carac){
+		if(strcmp((char*)data,(char*)tete(l))<0)
+			return insererEnTete(l,data);
+		if(strcmp((char*)data,(char*)tete(l))==0)
+			return l;
+	}
+	if(type==booleen){
+		if(*(Booleen*)data<*(Booleen*)tete(l))
+			return insererEnTete(l,data);
+		if(*(Booleen*)data==*(Booleen*)tete(l))
+			return l;
+	}
+	if(type==typeLog){
+		if(*(Typelog*)data<*(Typelog*)tete(l))
+			return insererEnTete(l,data);
+		if(*(Typelog*)data==*(Typelog*)tete(l))
+			return l;
+	}
+	if(type==civilite){
+		if(*(Civilite*)data<*(Civilite*)tete(l))
+			return insererEnTete(l,data);
+		if(*(Civilite*)data==*(Civilite*)tete(l))
+			return l;
+	}
+	l->suiv=insertion(l->suiv,data,type);
 	return l;
 }
 
-Liste supprimer(Liste l, int x){
+Liste supprimer(Liste l, void* data,Type type){
 	if(vide(l))
 		return l;
-	if(x<tete(l))
-		return l;
-	if(x==tete(l))
-		return supprimerEnTete(l);
-	l->suiv=supprimer(l->suiv,x);
+	if(type==entier){
+		if(*(int*)data<*(int*)tete(l))
+			return l;
+		if(*(int*)data==*(int*)tete(l))
+			return supprimerEnTete(l);
+	}
+	if(type==flotant){
+		if(*(float*)data<*(float*)tete(l))
+			return l;
+		if(*(float*)data==*(float*)tete(l))
+			return supprimerEnTete(l);
+	}
+	if(type==carac){
+		if(strcmp((char*)data,(char*)tete(l))<0)
+			return l;
+		if(strcmp((char*)data,(char*)tete(l))==0)
+			return supprimerEnTete(l);
+	}
+	if(type==booleen){
+		if(*(booleen*)data<*(Booleen*)tete(l))
+			return l;
+		if(*(Booleen*)data==*(Booleen*)tete(l))
+			return supprimerEnTete(l);
+	}
+	if(type==typeLog){
+		if(*(Typelog*)data<*(Typelog*)tete(l))
+			return l;
+		if(*(Typelog*)data==*(Typelog*)tete(l))
+			return supprimerEnTete(l);
+	}
+	if(type==civilite){
+		if(*(Civilite*)data<*(Civilite*)tete(l))
+			return l;
+		if(*(Civilite*)data==*(Civilite*)tete(l))
+			return supprimerEnTete(l);
+	}
+	l->suiv=supprimer(l->suiv,data,type);
 	return l;
 }
 
-Liste insertionEnQueu(Liste l, int x){
+Liste insertionEnQueu(Liste l, void* data){
 	if(vide(l))
-		return insererEnTete(l,x);
-	l->suiv=insertionEnQueu(l->suiv,x);
+		return insererEnTete(l,data);
+	l->suiv=insertionEnQueu(l->suiv,data);
 	return l;
 }
 
