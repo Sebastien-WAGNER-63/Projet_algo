@@ -237,7 +237,7 @@ Liste supprimer(Liste l, void* data,Type type){
 		if(*(Civilite*)data==*(Civilite*)tete(l))
 			return supprimerEnTete(l);
 	}
-	l->suiv=supprimer(l->suiv,data,type);printf("1\n");
+	l->suiv=supprimer(l->suiv,data,type);
 	return l;
 }
 
