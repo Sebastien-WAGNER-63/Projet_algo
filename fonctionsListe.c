@@ -220,7 +220,7 @@ Liste supprimer(Liste l, void* data,Type type){
 			return supprimerEnTete(l);
 	}
 	if(type==booleen){
-		if(*(booleen*)data<*(Booleen*)tete(l))
+		if(*(Booleen*)data<*(Booleen*)tete(l))
 			return l;
 		if(*(Booleen*)data==*(Booleen*)tete(l))
 			return supprimerEnTete(l);
@@ -237,7 +237,7 @@ Liste supprimer(Liste l, void* data,Type type){
 		if(*(Civilite*)data==*(Civilite*)tete(l))
 			return supprimerEnTete(l);
 	}
-	l->suiv=supprimer(l->suiv,data,type);
+	l->suiv=supprimer(l->suiv,data,type);printf("1\n");
 	return l;
 }
 
