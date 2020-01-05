@@ -73,8 +73,9 @@ Liste existeEtud(Liste l, void* data);
 Liste repDemande(Liste l,void* dataNom,void* dataType,void* dataDispo, void* dataHandi);
 //Q6
 void fAddDemandeLog(Liste demande,Liste etud);
-void fAddEtud(Liste etud);
+void fAddEtud(Liste etud, char* idEtud);
 void fEnregGemande(Liste demande,DemandeA demandeA);
+Booleen testId(char* id);
 //Q7
 void fAnnulDemande(Liste demande);
 //Q8

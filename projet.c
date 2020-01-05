@@ -29,6 +29,7 @@ void global(void){
 	etud=insererEnTete(etud, &p);
 	
 	fTraitementDem(demande,logement,etud);
+	fAddDemandeLog(demande,etud);
 }
 
 void fTraitementDem(Liste demande,Liste logement,Liste etud){
@@ -105,4 +106,87 @@ Booleen existeHandic(Liste l, void* data){
 	if(*(Booleen*)data==((Logement*)tete(l))->handicap)
 		return vrai;
 	return faux;
+}
+
+void fAddDemandeLog(Liste demande,Liste etud){
+	DemandeA demandeA;
+	Liste etudTmp;
+	printf("Saisir l'identifiant de l'étudiant :\n");
+	scanf("%s",demandeA.idEtud);
+	while(!testId(demandeA.idEtud)){
+		printf("Saisir l'identifiant de l'étudiant :\n");
+		scanf("%s",demandeA.idEtud);
+	}
+	etudTmp=existeEtud(etud,demandeA.idEtud);
+	if(etudTmp==NULL){
+		printf("L'étudiant n°%s n'éxiste pas encore\n",demandeA.idEtud);
+		fAddEtud(etud, demandeA.idEtud);
+	}
+}
+
+void fAddEtud(Liste etud, char* idEtud){
+	Etudiant etudTmp;
+	Booleen continuer=faux;
+	char charTmp[100];
+	printf("Ajout de l'étudiant n°%s :\n",idEtud);
+	strcpy(etudTmp.idEtud,idEtud);
+	printf("Saisir sa civilité (Mr/Mme) :\n");
+	scanf("%s%*c",charTmp);
+	while(strcmp(charTmp,"Mr")!=0 && strcmp(charTmp,"Mme")!=0){
+		printf("Civilité invalide. Saisir sa civilité (Mr/Mme) :\n");
+		scanf("%s%*c",charTmp);
+	}
+	if(strcmp(charTmp,"Mr")==0)
+		etudTmp.civilite=Mr;
+	else
+		etudTmp.civilite=Mme;
+	printf("Saisir son Nom :\n");
+	fgets(charTmp,99,stdin);
+	charTmp[strlen(charTmp)-1]='\0';
+	etudTmp.nom=(char*)malloc(strlen(charTmp)*sizeof(char));
+	strcpy(etudTmp.nom,charTmp);
+	printf("Saisir son prénom :\n");
+	fgets(charTmp,99,stdin);
+	charTmp[strlen(charTmp)-1]='\0';
+	etudTmp.prenom=(char*)malloc(strlen(charTmp)*sizeof(char));
+	strcpy(etudTmp.prenom,charTmp);
+	printf("Est-il boursier ? (oui/non)\n");
+	scanf("%s%*c",charTmp);
+	while(strcmp(charTmp,"oui")!=0 && strcmp(charTmp,"non")!=0){
+		printf("Réponse invalide. Est-il boursier ? (oui/non)\n");
+		scanf("%s%*c",charTmp);
+	}
+	if(strcmp(charTmp,"oui")==0){
+		etudTmp.bourse=vrai;
+		printf("Saisir l'échelon de bourse : (1-7)\n");
+		scanf("%d",&etudTmp.echelon);
+		while(etudTmp.echelon<1 || etudTmp.echelon>7){
+			printf("Echelon invalide. Saisir l'échelon de bourse : (1-7)\n");
+			scanf("%d",&etudTmp.echelon);
+		}
+	}
+	else
+		etudTmp.bourse=faux;
+	printf("Est-il handicapé ? (oui/non)\n");
+	scanf("%s%*c",charTmp);
+	while(strcmp(charTmp,"oui")!=0 && strcmp(charTmp,"non")!=0){
+		printf("Réponse invalide. Est-il handicapé ? (oui/non)\n");
+		scanf("%s%*c",charTmp);
+	}
+	if(strcmp(charTmp,"oui")==0)
+		etudTmp.handicap=vrai;
+	else
+		etudTmp.handicap=faux;
+}
+
+Booleen testId(char* id){
+	if(strlen(id)!=6){
+		printf("identifiant invalide. Il doit contenir 6 caractère e la forme (L00000/E00000/D00000)\n");
+		return faux;
+	}
+	if(id[0]!='D' && id[0]!='L' && id[0]!='E'){
+		printf("identifiant invalide. Le premier caractère doit être L/E/D\n");
+		return faux;
+	}
+	return vrai;
 }
