@@ -56,13 +56,13 @@ typedef struct maillDemande{
 
 void global(void);
 //Q1
-void fChargementFic(ListLog logement, ListEtud etud, ListDemande demande);
+void fChargementFic(Liste logement, Liste etud, Liste demande);
 //Q2
-void fAffichageLogTri(ListLog logement);
+void fAffichageLogTri(Liste logement);
 //Q3
-void fAffichageLogOcc(ListLog logement);
+void fAffichageLogOcc(Liste logement);
 //Q4
-void fAffichageLogAtt(ListDemande demande);
+void fAffichageLogAtt(Liste demande);
 //Q5
 void fTraitementDem(Liste demande,Liste logement,Liste etud);
 Booleen existeNom(Liste l, void* data);
@@ -72,12 +72,12 @@ Booleen existeHandic(Liste l, void* data);
 Liste existeEtud(Liste l, void* data);
 Liste repDemande(Liste l,void* dataNom,void* dataType,void* dataDispo, void* dataHandi);
 //Q6
-void fAddDemandeLog(ListDemande demande,ListEtud etud);
-void fAddEtud(ListEtud etud);
-void fEnregGemande(ListDemande demande,DemandeA demandeA);
+void fAddDemandeLog(Liste demande,Liste etud);
+void fAddEtud(Liste etud);
+void fEnregGemande(Liste demande,DemandeA demandeA);
 //Q7
-void fAnnulDemande(ListDemande demande);
+void fAnnulDemande(Liste demande);
 //Q8
-void fDepartEtud(ListLog logement);
+void fDepartEtud(Liste logement);
 //Q9
-void fSauvegarde(ListDemande demande, ListLog logement, ListEtud etud);
+void fSauvegarde(Liste demande, Liste logement, Liste etud);
