@@ -36,46 +36,39 @@ typedef struct{
   Typelog type;
 }DemandeA;
 
-//Liste de Logement
-typedef struct maillLog{
-  Logement logement;
-  struct maillLog *suiv;
-}MaillLog, *ListLog;
-
-//Liste d'étudiant
-typedef struct maillEtud{
-  Etudiant etudiant;
-  struct maillEtud *suiv;
-}MaillEtud, *ListEtud;
-
-//Liste de demande
-typedef struct maillDemande{
-  DemandeA demande;
-  struct maillDemande *suiv;
-}MaillDemande, *ListDemande;
-
 void global(void);
 //Q1
-void fChargementFic(Liste logement, Liste etud, Liste demande);
-//Q2
-void fAffichageLogTri(Liste logement);
-//Q3
-void fAffichageLogOcc(Liste logement);
-//Q4
-void fAffichageLogAtt(Liste demande);
+Liste chargeLogement();
+Logement *lectureLogement(FILE *flot);
+void AffichLog(Liste logement);
+Liste insertionLog(Liste l, void* data);
+Liste chargeEtud(void);
+Etudiant* lectureEtud(FILE *flot);
+Liste insertionEtud(Liste l, void* data);
+Liste chargeDemande(void);
+DemandeA* lectureDemande(FILE *flot);
+Liste insertionDemande(Liste l, void* data);
+
+void AffichLog(Liste logement);
+void AffichLogOcup(Liste logement,Liste etud);
+void nomEtPrenom(Liste logement, Liste etud);
+void AffichDemande(Liste demande);
 //Q5
-void fTraitementDem(Liste demande,Liste logement,Liste etud);
+Liste fTraitementDem(Liste demande,Liste logement,Liste etud);
 Booleen existeNom(Liste l, void* data);
 Booleen existeType(Liste l, void* data);
 Booleen existeDispo(Liste l, void* data);
 Booleen existeHandic(Liste l, void* data);
 Liste existeEtud(Liste l, void* data);
 Liste repDemande(Liste l,void* dataNom,void* dataType,void* dataDispo, void* dataHandi);
+Booleen saisieBooleen(void);
 //Q6
-void fAddDemandeLog(Liste demande,Liste etud);
-void fAddEtud(Liste etud, char* idEtud);
-void fEnregGemande(Liste demande,DemandeA demandeA);
+Liste fAddDemandeLog(Liste demande,Liste *etud,Liste logement);
+Liste supprimerDemande(Liste l, Liste *data);
+Liste fAddEtud(Liste etud, char* idEtud);
 Booleen testId(char* id);
+void choixIdDemande(Liste demande, char tab2[]);
+Booleen existeNomCite(Liste l, void* data);
 //Q7
 void fAnnulDemande(Liste demande);
 //Q8
