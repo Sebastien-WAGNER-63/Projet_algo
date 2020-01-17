@@ -433,6 +433,20 @@ Booleen saisieBooleen(void){
 
 //Sebastien
 
+/*
+Nom : chargeLogement
+Finalité : Charger le tableau logement
+
+Description Général :
+	crée une nouvelle liste
+	charge la liste logement depuis le fichier correspondant
+	retourne la liste
+
+Variables :
+	l		liste logement
+	log		variable de type logement
+*/
+
 Liste chargeLogement(void)
 {
 	Liste l=listenouv();
@@ -454,6 +468,19 @@ Liste chargeLogement(void)
 	fclose(flot);
 	return l;
 }
+
+/*
+Nom : lectureLogement
+Finalité : lire un logement
+
+Description Général :
+	fait la lecture d'un logement
+	depuis le fichier donner en argument
+	et retourne le logement
+
+Variables :
+	log		variable de type logement
+*/
 
 Logement* lectureLogement(FILE *flot)
 {
@@ -478,6 +505,14 @@ Logement* lectureLogement(FILE *flot)
 	return log;
 }
 
+/*
+Nom : insertionLog
+Finalité : inserre les logment dans la liste
+
+Description Général :
+	inserre par ordre alphabétique les logements
+*/
+
 Liste insertionLog(Liste l, void* data){
 	if(vide(l))
 		return insererEnTete(l,data);
@@ -488,6 +523,20 @@ Liste insertionLog(Liste l, void* data){
 	l->suiv=insertionLog(l->suiv,data);
 	return l;
 }
+
+/*
+Nom : chargeEtud
+Finalité : Charger le tableau etudiant
+
+Description Général :
+	crée une nouvelle liste
+	charge la liste etudiant depuis le fichier correspondant
+	retourne la liste
+
+Variables :
+	l		liste etudiant
+	log		variable de type etudiant
+*/
 
 Liste chargeEtud(void)
 {
@@ -510,6 +559,19 @@ Liste chargeEtud(void)
 	fclose(flot);
 	return l;
 }
+
+/*
+Nom : lectureEtud
+Finalité : lire un étudiant
+
+Description Général :
+	fait la lecture d'un étudiant
+	depuis le fichier donné en argument
+	retourne l'étudiant
+
+Variables :
+	etud		variable de type etudiant
+*/
 
 Etudiant* lectureEtud(FILE *flot)
 {
@@ -544,6 +606,15 @@ Etudiant* lectureEtud(FILE *flot)
 	return etud;
 }
 
+/*
+Nom : insertionEtud
+Finalité : inserre les étudiant dans la liste
+
+Description Général :
+	inserre les l'étudiant dans la liste
+	par ordre alphabétique
+*/
+
 Liste insertionEtud(Liste l, void* data){
 	if(vide(l)){
 		return insererEnTete(l,data);
@@ -557,6 +628,20 @@ Liste insertionEtud(Liste l, void* data){
 	l->suiv=insertionEtud(l->suiv,data);
 	return l;
 }
+
+/*
+Nom : chargeDemande
+Finalité : Charger le tableau demande
+
+Description Général :
+	crée une nouvelle liste
+	charge la liste demande depuis le fichier correspondant
+	retourne la liste
+
+Variables :
+	l		liste demande
+	demande		variable de type demande
+*/
 
 Liste chargeDemande(void)
 {
@@ -580,6 +665,19 @@ Liste chargeDemande(void)
 	return l;
 }
 
+/*
+Nom : lectureDemande
+Finalité : lire une demande
+
+Description Général :
+	fait la lecture d'une demande
+	depuis le fichier donné en argument
+	retourne la demande
+
+Variables :
+	demande		variable de type demande
+*/
+
 DemandeA* lectureDemande(FILE *flot)
 {
 	DemandeA *demande;
@@ -601,6 +699,15 @@ DemandeA* lectureDemande(FILE *flot)
 	return demande;
 }
 
+/*
+Nom : insertionDemmande
+Finalité : inserre les demandes dans la liste
+
+Description Général :
+	inserre les demandes dans la liste
+	par ordre alphabétique
+*/
+
 Liste insertionDemande(Liste l, void* data){
 	if(vide(l)){
 		return insererEnTete(l,data);
@@ -614,6 +721,13 @@ Liste insertionDemande(Liste l, void* data){
 	l->suiv=insertionDemande(l->suiv,data);
 	return l;
 }
+
+/*
+	programme	: Affichage liste logement
+	auteur		: WAGNER Sébastien
+	date		: 09/12/2020
+	finalité	: Afficher les logements inoccupés
+*/
 
 void AffichLog(Liste logement)
 {
@@ -640,6 +754,13 @@ void AffichLog(Liste logement)
 	}
 }
 
+/*
+	programme	: Affichage liste logement
+	auteur		: WAGNER Sébastien
+	date		: 09/12/2020
+	finalité	: Afficher les logements occupés et l'identité de l'occupant
+*/
+
 void AffichLogOcup(Liste logement,Liste etud)
 {
 	printf("idLogement\tnom logement\tidEtud\ttype\tnom\tprenom\n");
@@ -663,6 +784,13 @@ void AffichLogOcup(Liste logement,Liste etud)
 	printf("\n");
 }
 
+/*
+	programme	: Afficher les noms et prénoms
+	auteur		: WAGNER Sébastien
+	date		: 09/12/2020
+	finalité	: Retrouve les nom et prénom d'un occupant de logement
+*/
+
 void nomEtPrenom(Liste logement, Liste etud)
 {
 	while(vide(etud)==faux)
@@ -677,6 +805,13 @@ void nomEtPrenom(Liste logement, Liste etud)
 	printf("ERREUR\n");
 	exit(1);
 }
+
+/*
+	programme	: Affichage liste demande
+	auteur		: WAGNER Sébastien
+	date		: 09/12/2020
+	finalité	: Afficher la liste des demandes
+*/
 
 void AffichDemande(Liste demande)
 {
