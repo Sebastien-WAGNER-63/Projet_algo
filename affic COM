@@ -1,0 +1,109 @@
+/*
+	programme	: Affichage liste logement
+	auteur		: WAGNER Sébastien
+	date		: 09/12/2020
+	finalité	: Afficher les logements inoccupés
+*/
+
+void AffichLog(Liste logement)
+{
+	printf("idLogement\tnom\t\t\ttype logement\thandicap\n");
+	printf("------------------------------------------------------------------\n");
+	while(vide(logement)==faux)
+	{
+		if (((Logement*)logement->data)->dispo==vrai){
+			printf("%s\t\t%s\t\t",((Logement*)logement->data)->idLogement,((Logement*)logement->data)->nom);
+			if (((Logement*)logement->data)->type==0)
+				printf("chambre\t");
+			if (((Logement*)logement->data)->type==1)
+				printf("studio\t");
+			if (((Logement*)logement->data)->type==2)
+				printf("T1\t");
+			if (((Logement*)logement->data)->type==3)
+				printf("T2\t");
+			if (((Logement*)logement->data)->handicap==vrai)
+				printf("\toui\n");
+			else
+				printf("\tnon\n");
+		}
+		logement=logement->suiv;
+	}
+}
+
+/*
+	programme	: Affichage liste logement
+	auteur		: WAGNER Sébastien
+	date		: 09/12/2020
+	finalité	: Afficher les logements occupés et l'identité de l'occupant
+*/
+
+void AffichLogOcup(Liste logement,Liste etud)
+{
+	printf("idLogement\tnom logement\tidEtud\ttype\tnom\tprenom\n");
+	printf("---------------------------------------------------------------\n");
+	while(vide(logement)==faux)
+	{
+		if (((Logement*)logement->data)->dispo==faux){
+			printf("%s\t\t%s\t%s",((Logement*)logement->data)->idLogement,((Logement*)logement->data)->nom,((Logement*)logement->data)->idEtud);
+			if (((Logement*)logement->data)->type==0)
+				printf("\tchambre\t");
+			if (((Logement*)logement->data)->type==1)
+				printf("\tstudio\t");
+			if (((Logement*)logement->data)->type==2)
+				printf("\tT1\t");
+			if (((Logement*)logement->data)->type==3)
+				printf("\tT2\t");
+			nomEtPrenom(logement,etud);
+		}
+		logement=logement->suiv;
+	}
+	printf("\n");
+}
+
+/*
+	programme	: Afficher les noms et prénoms
+	auteur		: WAGNER Sébastien
+	date		: 09/12/2020
+	finalité	: Retrouve les nom et prénom d'un occupant de logement
+*/
+
+void nomEtPrenom(Liste logement, Liste etud)
+{
+	while(vide(etud)==faux)
+	{
+		if (strcmp(((Logement*)logement->data)->idEtud,((Etudiant*)etud->data)->idEtud)==0){
+				printf("%s\t%s\n",((Etudiant*)etud->data)->nom,((Etudiant*)etud->data)->prenom);
+				return;
+			}
+			etud=etud->suiv;
+	}
+	printf("\tEtudiant inconnu\n");
+	printf("ERREUR\n");
+	exit(1);
+}
+
+/*
+	programme	: Affichage liste demande
+	auteur		: WAGNER Sébastien
+	date		: 09/12/2020
+	finalité	: Afficher la liste des demandes
+*/
+
+void AffichDemande(Liste demande)
+{
+	printf("idDemande\tidEtud\techelon\tnom de cité\t\ttype\n");
+	printf("--------------------------------------------------------------\n");
+	while(vide(demande)==faux)
+	{
+		printf("%s\t\t%s\t%d\t%s\t",((DemandeA*)demande->data)->idDemande,((DemandeA*)demande->data)->idEtud,((DemandeA*)demande->data)->echelon,((DemandeA*)demande->data)->nomCite);
+		if (((DemandeA*)demande->data)->type==0)
+				printf("\tchambre\n");
+			if (((DemandeA*)demande->data)->type==1)
+				printf("\tstudio\n");
+			if (((DemandeA*)demande->data)->type==2)
+				printf("\tT1\n");
+			if (((DemandeA*)demande->data)->type==3)
+				printf("\tT2\n");
+		demande=demande->suiv;
+	}
+}
