@@ -40,7 +40,6 @@ void global(void);
 //Q1
 Liste chargeLogement();
 Logement *lectureLogement(FILE *flot);
-void AffichLog(Liste logement);
 Liste insertionLog(Liste l, void* data);
 Liste chargeEtud(void);
 Etudiant* lectureEtud(FILE *flot);
@@ -48,27 +47,26 @@ Liste insertionEtud(Liste l, void* data);
 Liste chargeDemande(void);
 DemandeA* lectureDemande(FILE *flot);
 Liste insertionDemande(Liste l, void* data);
-
+//Q2
 void AffichLog(Liste logement);
+//Q3
 void AffichLogOcup(Liste logement,Liste etud);
 void nomEtPrenom(Liste logement, Liste etud);
+//Q4
 void AffichDemande(Liste demande);
 //Q5
 Liste fTraitementDem(Liste demande,Liste logement,Liste etud);
-Booleen existeNom(Liste l, void* data);
-Booleen existeType(Liste l, void* data);
-Booleen existeDispo(Liste l, void* data);
-Booleen existeHandic(Liste l, void* data);
+Liste supprimerDemande(Liste l, Liste *data);
+Liste repDemande(Liste l,void* dataNom,void* dataType, void* dataHandi);
+Booleen existeNomCite(Liste l, void* data);
 Liste existeEtud(Liste l, void* data);
-Liste repDemande(Liste l,void* dataNom,void* dataType,void* dataDispo, void* dataHandi);
-Booleen saisieBooleen(void);
 //Q6
 Liste fAddDemandeLog(Liste demande,Liste *etud,Liste logement);
-Liste supprimerDemande(Liste l, Liste *data);
 Liste fAddEtud(Liste etud, char* idEtud);
-Booleen testId(char* id);
 void choixIdDemande(Liste demande, char tab2[]);
-Booleen existeNomCite(Liste l, void* data);
+Booleen testId(char* id);
+Booleen saisieBooleen(void);
+
 //Q7
 void fAnnulDemande(Liste demande);
 //Q8

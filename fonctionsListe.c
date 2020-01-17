@@ -29,6 +29,7 @@ Booleen vide(Liste l){
 }
 
 
+//X
 //version it
 void affichageListeIt(Liste l,Type type){
 	while(!vide(l)){
@@ -49,29 +50,6 @@ void affichageListeIt(Liste l,Type type){
 }
 
 
-/*
-//version rec
-void affichageListeRec(Liste l,Type type){
-	if(vide(l)){
-		printf("\n");
-		return;
-	}
-	if(type==entier)
-		printf("%d",*(int*)l->data);
-	if(type==flotant)
-		printf("%.2f",*(float*)l->data);
-	if(type==carac)
-		printf("%s",(char*)l->data);
-	if(type==booleen)
-		printf("%d\n",*(Booleen*)l->data);
-	if(type==typeLog)
-		printf("%d\n",*(Typelog*)l->data);
-	if(type==civilite)
-		printf("%d\n",*(Civilite*)l->data);
-	affichageListeRec(l->suiv);
-}
-*/
-
 void *tete (Liste l){
 	if(vide(l)){
 		printf("opperation interdite\n");
@@ -81,6 +59,7 @@ void *tete (Liste l){
 }
 
 
+//X
 //version it
 int longueurIt(Liste l){
 	int cpt=0;
@@ -91,16 +70,7 @@ int longueurIt(Liste l){
 	return cpt;
 }
 
-
-/*
-//version rec
-int longueurRec(Liste l){
-	if(vide(l))
-		return 0;
-	return 1 + longueurRec(l->suiv);
-}
-*/
-
+//X
 Booleen existe(Liste l, void* data, Type type){
 	if(vide(l))
 		return faux;
@@ -155,6 +125,7 @@ Liste supprimerEnTete(Liste l){
 	return l;
 }
 
+//X
 Liste insertion(Liste l, void* data, Type type){
 	if(vide(l))
 		return insererEnTete(l,data);
@@ -198,6 +169,7 @@ Liste insertion(Liste l, void* data, Type type){
 	return l;
 }
 
+//X
 Liste supprimer(Liste l, void* data,Type type){
 	if(vide(l))
 		return l;
@@ -241,6 +213,7 @@ Liste supprimer(Liste l, void* data,Type type){
 	return l;
 }
 
+//X
 Liste insertionEnQueu(Liste l, void* data){
 	if(vide(l))
 		return insererEnTete(l,data);
@@ -248,6 +221,7 @@ Liste insertionEnQueu(Liste l, void* data){
 	return l;
 }
 
+//X
 void supprimerListe(Liste l){
 	while(!vide(l))
 		l=supprimerEnTete(l);

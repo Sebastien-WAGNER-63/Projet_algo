@@ -4,6 +4,22 @@
 #include <math.h>
 #include <string.h>
 
+
+/*
+Nom : global
+Finalité : séléctionner les différentes fonctions du programme
+
+Description Général :
+	Charge les fichiers dans des listes
+	Traite les demandent
+	Menu pour choisir l'action a éffectuer
+
+Variables :
+	choix 		La fonction séléctionné dans le menu
+	logement 	Liste de logement
+	etud 		Liste d'étudiant
+	demande 	Liste de demande en attente
+*/
 void global(void){
 	Liste logement,etud,demande;
 	int choix;
@@ -36,9 +52,26 @@ void global(void){
 
 }
 
+/*
+Nom : fTraitementDem
+Finalité : Traiter les demandes en attente
+
+Description Général :
+	Parcour la liste de demande
+	Teste si l'étudiant existe
+	Teste si un logement compatible est disponible
+		Affiche un message, rend le logement occupé et suprime la demande si validé
+
+Variables :
+	logement 	Liste de logement
+	etud 		Liste d'étudiant
+	demande 	Liste de demande en attente
+	etudTmp 	Liste d'un étudiant utilisé temporairement
+	logTmp 		Liste d'un logement utilisé temporairement
+	demTmp	 	Liste d'une demande utilisée etemporairement
+*/
 Liste fTraitementDem(Liste demande,Liste logement,Liste etud){
-	Booleen bool=vrai;
-	Liste etudTmp, logTmp, demTmp, demTst;
+	Liste etudTmp, logTmp, demTmp;
 	demTmp=demande;
 	while(!vide(demTmp)){
 		etudTmp=existeEtud(etud,((DemandeA*)demTmp->data)->idEtud);
@@ -47,7 +80,7 @@ Liste fTraitementDem(Liste demande,Liste logement,Liste etud){
 			demTmp=demTmp->suiv;
 			continue;
 		}
-		logTmp=repDemande(logement,((DemandeA*)demTmp->data)->nomCite, &((DemandeA*)demTmp->data)->type, &bool, &((Etudiant*)etudTmp->data)->handicap);
+		logTmp=repDemande(logement,((DemandeA*)demTmp->data)->nomCite, &((DemandeA*)demTmp->data)->type, &((Etudiant*)etudTmp->data)->handicap);
 		if(logTmp!=NULL){
 			((Logement*)logTmp->data)->dispo=faux;
 			strcpy(((Logement*)logTmp->data)->idEtud,((DemandeA*)demTmp->data)->idEtud);
@@ -62,6 +95,19 @@ Liste fTraitementDem(Liste demande,Liste logement,Liste etud){
 	return demande;
 }
 
+/*
+Nom : supprimerDemande
+Finalité : Supprimer une demande en attente
+
+Description Général :
+	Teste si la liste est vide
+	Teste si l'identifiant de la demande est celui que l'on veut supprimer
+		Supprime le maillon
+
+Variables :
+	l 			Liste de toute les demande en attente
+	data 		Liste d'une demande en attente à supprimer
+*/
 Liste supprimerDemande(Liste l, Liste *data){
 	if(vide(l)){
 		printf("vide\n");
@@ -76,16 +122,44 @@ Liste supprimerDemande(Liste l, Liste *data){
 	return l;
 }
 
-Liste repDemande(Liste l,void* dataNom,void* dataType,void* dataDispo, void* dataHandi){
+/*
+Nom : repDemande
+Finalité : Verrifier si un logement est compatible
+
+Description Général :
+	Parcour la liste de logement
+	Teste si il est vide, dans la bonne cité, le bon type, handicapé ou non
+	Retourne le logement valide ou NULL
+
+Variables :
+	l 			Liste de demande
+	dataNom 	Nom de la cité voulu
+	dataType	Type de logement voulu
+	dataHandi	Handicapé ou pas
+*/
+Liste repDemande(Liste l,void* dataNom,void* dataType, void* dataHandi){
 	while(!vide(l)){
-		if(existeNom(l, dataNom) && existeType(l, dataType) && existeDispo(l, dataDispo) && existeHandic(l, dataHandi))
+		if(strcmp(((Logement*)l->data)->nom, dataNom)==0 && ((Logement*)l->data)->type==*(Typelog*)dataType && ((Logement*)l->data)->dispo==vrai && ((Logement*)l->data)->handicap==*(Booleen*)dataHandi)
 			return l;
 		l=l->suiv;
 	}
 	return NULL;
 }
 
+/*
+Nom : existeEtud
+Finalité : Chercher si un étudiant existe
 
+Description Général :
+	Teste si la liste est vide
+	Teste si l'identifiant de l'etudient est plus petit que celui que l'on cherche
+	Teste si l'identifiant de l'etudient est egal à celui que l'on cherche
+		Retourne la Le maillon de la liste de l'étudiant cherché
+
+Variables :
+	l 			Liste d'étudiant
+	data 		Identifiant de l'étudiant recherché
+*/
 Liste existeEtud(Liste l, void* data){
 	if(vide(l))
 		return NULL;
@@ -96,6 +170,20 @@ Liste existeEtud(Liste l, void* data){
 	return existeEtud(l->suiv,data);
 }
 
+/*
+Nom : existeNomCite
+Finalité : Chercher si une cité universitaire existe
+
+Description Général :
+	Teste si la liste est vide
+	Teste si le nom de la cité est plus petit que celui que l'on cherche
+	Teste si le nom de la cité est egal à celui que l'on cherche
+		Retourne vrai ou faux
+
+Variables :
+	l 			Liste de Logement
+	data 		Identifiant de la cité universitaire recherchée
+*/
 Booleen existeNomCite(Liste l, void* data){
 	if(vide(l)){
 		return faux;
@@ -109,47 +197,34 @@ Booleen existeNomCite(Liste l, void* data){
 	return existeNomCite(l->suiv,data);
 }
 
-Booleen existeNom(Liste l, void* data){
-	if(vide(l))
-		return faux;
-	if(strcmp((char*)data,((Logement*)tete(l))->nom)==0)
-		return vrai;
-	return faux;
-}
+/*
+Nom : fAddDemandeLog
+Finalité : Ajouter une demande de logement et un étudiant si il n'existe pas encore
 
-Booleen existeType(Liste l, void* data){
-	if(vide(l))
-		return faux;
-	if(*(Typelog*)data==((Logement*)tete(l))->type)
-		return vrai;
-	return faux;
-}
+Description Général :
+	Création de la demande
+	Saisie de l'identifiant del'étudiant
+		Si inexistant appel de la fonction de création de l'étudiant
+	Saisie du reste des informations de la demande
+	Insertion de la demande dans la liste
 
-Booleen existeDispo(Liste l, void* data){
-	if(vide(l))
-		return faux;
-	if(*(Booleen*)data==((Logement*)tete(l))->dispo)
-		return vrai;
-	return faux;
-}
-
-Booleen existeHandic(Liste l, void* data){
-	if(vide(l))
-		return faux;
-	if(*(Booleen*)data==((Logement*)tete(l))->handicap)
-		return vrai;
-	return faux;
-}
-
+Variables :
+	demande		Liste de demande en attente
+	etud 		Liste d'étudiants
+	logement 	Liste de logement
+	demandeA 	Nouvelle demande
+	charTmp 	Chaîne de caractères temporaire pour les saisies
+	etudTmp		Liste d'étudiant temporaire
+*/
 Liste fAddDemandeLog(Liste demande,Liste *etud,Liste logement){
 	DemandeA *demandeA;
 	char charTmp[100];
+	Liste etudTmp;
 	demandeA=(DemandeA*)malloc(sizeof(DemandeA));
 	if(demandeA==NULL){
 		printf("erreur malloc\n");
 		exit(1);
 	}
-	Liste etudTmp;
 	choixIdDemande(demande,demandeA->idDemande);
 	printf("Saisir l'identifiant de l'étudiant :\n");
 	scanf("%s%*c",demandeA->idEtud);
@@ -204,6 +279,22 @@ Liste fAddDemandeLog(Liste demande,Liste *etud,Liste logement){
 	return demande;
 }
 
+/*
+Nom : choixIdDemande
+Finalité : Choisir un identifiant pour la nouvelle demande de manière automatique
+
+Description Général :
+	Parcour des demandes
+	Récupération de l'identifiant de la demande
+	Test si l'identifiant est different du précedent +1
+	attribué celui-ci à la nouvelle demande
+
+Variables :
+	demande		Liste de demande en attente
+	tab2	 	Identifiant de la nouvelle demande
+	i 		 	Compteur
+	tab 		Identifiant de la demande déja utilisé
+*/
 void choixIdDemande(Liste demande, char tab2[]){
 	int i=1;
 	char tab[6];
@@ -228,14 +319,29 @@ void choixIdDemande(Liste demande, char tab2[]){
 	tab2[6]='\0';
 }
 
+/*
+Nom : fAddEtud
+Finalité : Ajouter un étudiant
+
+Description Général :
+	Création de l'étudiant'
+	Saisie des informations de l'étudiant
+	Insertion de l'étudiant dans la liste
+
+Variables :
+	etud		Liste d'étudiants
+	etudtmp	 	Nouvel étudiant
+	idEtud 		Identifiant du nouvel étudiant
+	charTmp 	Chaîne de caractères temporaire pour les saisies
+*/
 Liste fAddEtud(Liste etud, char* idEtud){
 	Etudiant *etudTmp;
+	char charTmp[100];
 	etudTmp=(Etudiant*)malloc(sizeof(Etudiant));
 	if(etudTmp==NULL){
 		printf("erreur malloc\n");
 		exit(1);
 	}
-	char charTmp[100];
 	printf("Ajout de l'étudiant n°%s :\n",idEtud);
 	strcpy(etudTmp->idEtud,idEtud);
 	printf("Saisir sa civilité (Mr/Mme) :\n");
@@ -278,6 +384,17 @@ Liste fAddEtud(Liste etud, char* idEtud){
 	return etud;
 }
 
+/*
+Nom : testId
+Finalité :Tester si le format de l'identifiant est correcte
+
+Description Général :
+	Teste de la taille de l'identifiant
+	Teste de son contenue
+
+Variables :
+	id 			Identifiant
+*/
 Booleen testId(char* id){
 	if(strlen(id)!=6){
 		printf("Identifiant invalide. Il doit contenir 6 caractères de la forme (L00000/E00000/D00000)\n");
@@ -290,6 +407,17 @@ Booleen testId(char* id){
 	return vrai;
 }
 
+/*
+Nom : saisieBooleen
+Finalité : Saisir une information de type oui ou non
+
+Description Général :
+	Saisie de la réponse
+	Teste de son contenue
+
+Variables :
+	charTmp 		Chaîne de caractères temporaire pour les saisies
+*/
 Booleen saisieBooleen(void){
 	char charTmp[100];
 	scanf("%s%*c",charTmp);
