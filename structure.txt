@@ -1,0 +1,42 @@
+Structure des fichiers :
+
+¤logement.fic :
+
+L00001            ->idLogement
+Cité des Cézaux   ->nom du logment
+1                 ->type de logement (0=chambre; 1=studio; 2=T1; 3=T2)
+0                 ->si le logement est disponible (0=non; 1=oui), si il n'est pas diponible on retrouve l'identifiant de l'occupant enn fin de fichier
+1                 ->si il est adapté aux handicapés (0=non; 1=oui)
+E00001            ->identifiant de l'étudiant occupant
+L00002
+.
+.
+.
+
+¤etudiants.fic
+
+E00001            ->idEtudiant
+0                 ->civilité (0=Mr, 1=Mme)
+Benoit            ->nom
+Mussard           ->prenom
+1                 ->bourse (0=non; 1=oui) si oui l'échelon est donné juste après
+5                 ->échelon de bourse
+1                 ->handicape (0=non; 1=oui)
+E00002
+.
+.
+.
+
+¤demandesEnAttente.fic
+
+D00004            ->idDemande
+E00003            ->idEtudiant demandeur
+7                 ->echelon (0 si non boursier)
+Cité des Cézaux   ->cité demandé
+1                 ->type de logement demandé
+D00001
+.
+.
+.
+
+
