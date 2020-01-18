@@ -706,6 +706,10 @@ Finalité : inserre les demandes dans la liste
 Description Général :
 	inserre les demandes dans la liste
 	par ordre alphabétique
+	
+Variables :
+	l		liste des demandes
+	data		la demande à inserer
 */
 
 Liste insertionDemande(Liste l, void* data){
@@ -723,10 +727,15 @@ Liste insertionDemande(Liste l, void* data){
 }
 
 /*
-	programme	: Affichage liste logement
-	auteur		: WAGNER Sébastien
-	date		: 09/12/2020
-	finalité	: Afficher les logements inoccupés
+Nom : Affichlog
+Finalité : afficher la liste logement
+
+Description Général :
+	afficher les logements innocupés
+	depuis la liste donné en argument
+	
+Variables :
+	logement		liste logement a afficher
 */
 
 void AffichLog(Liste logement)
@@ -755,10 +764,16 @@ void AffichLog(Liste logement)
 }
 
 /*
-	programme	: Affichage liste logement
-	auteur		: WAGNER Sébastien
-	date		: 09/12/2020
-	finalité	: Afficher les logements occupés et l'identité de l'occupant
+Nom : AffichlogOcup
+Finalité : afficher la liste logement occupé
+
+Description Général :
+	afficher les logements occupé
+	avec le nom de l'ocupant
+	
+Variables :
+	logement		liste logement a afficher
+	etud			liste des etudiants
 */
 
 void AffichLogOcup(Liste logement,Liste etud)
@@ -785,10 +800,16 @@ void AffichLogOcup(Liste logement,Liste etud)
 }
 
 /*
-	programme	: Afficher les noms et prénoms
-	auteur		: WAGNER Sébastien
-	date		: 09/12/2020
-	finalité	: Retrouve les nom et prénom d'un occupant de logement
+Nom : nomEtPrenom
+Finalité : trouver l'étudiant qui occupe le logement
+
+Description Général :
+	parcour la liste étudiant pour trouver
+	l'étudiant qui correspond au logement
+	
+Variables :
+	logement		liste logement
+	etud			liste des etudiants
 */
 
 void nomEtPrenom(Liste logement, Liste etud)
@@ -807,10 +828,14 @@ void nomEtPrenom(Liste logement, Liste etud)
 }
 
 /*
-	programme	: Affichage liste demande
-	auteur		: WAGNER Sébastien
-	date		: 09/12/2020
-	finalité	: Afficher la liste des demandes
+Nom : AffichDemande
+Finalité : afficher la liste demande
+
+Description Général :
+	affiche l'intégralité de la liste des demandes
+	
+Variables :
+	demande		liste des demandes
 */
 
 void AffichDemande(Liste demande)
