@@ -5,7 +5,7 @@ Structure des fichiers :
 L00001            ->idLogement
 Cité des Cézaux   ->nom du logment
 1                 ->type de logement (0=chambre; 1=studio; 2=T1; 3=T2)
-0                 ->si le logement est disponible (0=non; 1=oui), si il n'est pas diponible on retrouve l'identifiant de l'occupant enn fin de fichier
+0                 ->si le logement est disponible (0=non; 1=oui), si il n'est pas diponible on retrouve l'identifiant de l'occupant en fin de fichier
 1                 ->si il est adapté aux handicapés (0=non; 1=oui)
 E00001            ->identifiant de l'étudiant occupant
 L00002
@@ -39,4 +39,54 @@ D00001
 .
 .
 
+Strucure de liste :
 
+typedef struct maillon
+{	void *data;             ->emplacemant pour les données, le void permet de mettre tous types de données (logement, etudiant ou demande)
+	struct maillon * suiv;  ->*suiv est le pointeur vers le maillon suivant
+} Maillon, *Liste;
+
+typedef enum{
+  chambre, studio, T1, T2 ->ce sont tous les types de logements trouvables, il perment de simplifier le code
+}Typelog;
+
+typedef enum{
+  Mr, Mme                 ->ce sont toutes les civilités trouvables dans les fichiers, elles permentent aussi de simplifier le code
+}Civilite;
+
+typedef enum{
+	faux,vrai               ->il permet de mettre un nom sur les possibilités dans le fichier afen de simplifier le code           (handicape,boursier...)
+}Booleen;
+
+typedef struct{
+  char idLogement[7];     ->identifiant du logement
+  char * nom;             ->nom de la cité etudiante
+  Typelog type;           ->type du logement (studio,chambre,T1,T2)
+  Booleen dispo;          ->booleen qui annonce si le logement est disponible
+  Booleen handicap;       ->booleen qui annonce si le logement est adapté aux handicapés
+  char idEtud[7];         ->si le logement est occupé alors ce champ renseigne l'identifiant de l'étudiant en qustion
+}Logement;
+
+typedef struct{
+  char idEtud[7];         ->identifiant de l'étudiant
+  Civilite civilite;      ->sa civilité (Mr ou Mme)
+  char *nom;              ->son nom
+  char *prenom;           ->son prénom
+  Booleen bourse;         ->booleen qui annonce si l'étudiant est boursier
+  int echelon;            ->si l'étudiant est boursier alors ce champ renseigne de l'échelon de sa bourse
+  Booleen handicap;       ->booleen qui annonce si l'étudiant est handicapé
+}Etudiant;
+
+typedef struct{
+  char idDemande[7];      ->identifiant de la demande
+  char idEtud[7];         ->identifiant de l'étudiant demandeur
+  int echelon;            ->donne l'échelon de la bourse, 0 si il ne possède pas de bourse
+  char *nomCite;          ->ce champ renseigne la cité demandé par l'étudiant
+  Typelog type;           ->ce champ renseigne du type de logement demandé par l'étudiant
+}DemandeA;
+
+Lorseque nous voulons utiliser les données dans un maillon (void *data), nous devons "caster" les données.
+En effet puisque les données stockés n'ont pas de type défini, nous devons préciser de quel type est la donné souhaité (logement, etudiant ou demande).
+Exemple : pour accéder à l'identifiant d'un logement nous devons utiliser cette forme de chemin
+((Logement*)logement->data)->idLogement, la partie "((Logement*)logement->data)" précise que le type demendé est un logement et la partie "->idLogement" est l'endroit où nous voulons accéder.
+L'utilisation du void *data permet d'utiliser qu'une seul structure de maillon pour tous les types de structures ce qui simplifie notre code.
