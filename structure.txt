@@ -88,5 +88,5 @@ typedef struct{
 Lorseque nous voulons utiliser les données dans un maillon (void *data), nous devons "caster" les données.
 En effet puisque les données stockés n'ont pas de type défini, nous devons préciser de quel type est la donné souhaité (logement, etudiant ou demande).
 Exemple : pour accéder à l'identifiant d'un logement nous devons utiliser cette forme de chemin
-((Logement*)logement->data)->idLogement, la partie "((Logement*)logement->data)" précise que le type demendé est un logement et la partie "->idLogement" est l'endroit où nous voulons accéder.
+((Logement*)logement->data)->idLogement, la partie "((Logement*)logement->data)" précise que le type demendé est un pointeur sur un logement et la partie "->idLogement" est l'endroit où nous voulons accéder.
 L'utilisation du void *data permet d'utiliser qu'une seul structure de maillon pour tous les types de structures ce qui simplifie notre code.
