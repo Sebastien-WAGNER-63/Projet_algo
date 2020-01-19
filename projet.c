@@ -510,6 +510,10 @@ Finalité : insérer les logements dans la liste
 
 Description Générale :
 	Insérer par ordre alphabétique les logements
+
+Variables :
+	l		Liste de logement
+	*data		pointeur vers les données a rentrer
 */
 
 Liste insertionLog(Liste l, void* data){
@@ -609,6 +613,10 @@ Finalité : insérer les étudiants dans la liste
 
 Description Générale :
 	Insérer l'étudiant dans la liste par ordre alphabétique
+	
+Variables :
+	l		Liste des étudiants
+	*data		pointeur vers les données a rentrer
 */
 
 Liste insertionEtud(Liste l, void* data){
@@ -702,7 +710,7 @@ Description Générale :
 	Insérer les demandes dans la liste par ordre alphabétique
 	
 Variables :
-	l			Liste des demandes
+	l		Liste des demandes
 	data		La demande à insérer
 */
 
