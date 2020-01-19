@@ -46,6 +46,7 @@ void global(void){
 			case 4 : AffichDemande( demande);break;
 			case 5 : demande=fTraitementDem(demande,logement,etud);break;
 			case 6 : demande=fAddDemandeLog( demande, &etud, logement);break;
+			case 7 : demande=fAnnulDemande(demande);break;
 			default : exit(1); 
 		}
 	}
@@ -862,4 +863,41 @@ void AffichDemande(Liste demande)
 		printf("%s\n",((DemandeA*)demande->data)->nomCite);
 		demande=demande->suiv;
 	}
+}
+
+/*
+Nom : fAnnulDemande
+Finalité : Annulation d'une demande de logement
+
+Description Général :
+	demande à l'utilisateur l'identifiant de la demande à annuler
+	cherche cette demande dans la liste demande
+	supprimer la demande si présente dans la liste demande
+
+Variables :
+	demande 	liste des demandes
+*/
+
+Liste fAnnulDemande(Liste demande){
+	char idDemandeSup[7]={0};
+	Liste demBis = demande;
+	if(vide(demBis))
+	{
+		printf("Aucune demandes à supprimer\n");
+		return demande;
+	}
+	printf("Tapez l'identifiant de la demande à supprimer\n");
+	scanf("%s",idDemandeSup);
+	
+	while(vide(demBis)==faux)
+	{
+		if(strcmp(idDemandeSup, ((DemandeA*)demBis->data)->idDemande)==0)
+		{
+			demande=supprimerDemande(demande, &demBis);
+			return demande;
+		}
+		demBis=demBis->suiv;
+	}
+	printf("Demande non existante\n");
+	return demande;
 }
