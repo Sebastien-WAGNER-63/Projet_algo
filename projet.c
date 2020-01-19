@@ -464,7 +464,6 @@ Liste chargeLogement(void)
 		l=insertionLog(l,log);
 		log = lectureLogement(flot);
 	}
-	l=insertionLog(l,log);
 	fclose(flot);
 	return l;
 }
@@ -555,7 +554,6 @@ Liste chargeEtud(void)
 		l=insertionEtud(l,log);
 		log = lectureEtud(flot);
 	}
-	l=insertionEtud(l,log);
 	fclose(flot);
 	return l;
 }
@@ -660,7 +658,7 @@ Liste chargeDemande(void)
 		l=insertionDemande(l,demande);
 		demande = lectureDemande(flot);
 	}
-	l=insertionDemande(l,demande);
+	// l=insertionDemande(l,demande);
 	fclose(flot);
 	return l;
 }
@@ -745,21 +743,21 @@ void AffichLog(Liste logement)
 	while(vide(logement)==faux)
 	{
 		if (((Logement*)logement->data)->dispo==vrai){
-			printf("%s\t",((Logement*)logement->data)->idLogement);
+			printf("%s\t\t",((Logement*)logement->data)->idLogement);
 			if (((Logement*)logement->data)->type==0)
-				printf("chambre\t");
+				printf("chambre\t\t");
 			if (((Logement*)logement->data)->type==1)
-				printf("studio\t");
+				printf("studio\t\t");
 			if (((Logement*)logement->data)->type==2)
-				printf("T1\t");
+				printf("T1\t\t");
 			if (((Logement*)logement->data)->type==3)
-				printf("T2\t");
+				printf("T2\t\t");
 			if (((Logement*)logement->data)->handicap==vrai)
-				printf("oui\t");
+				printf("oui\t\t");
 			else
-				printf("\tnon\t");
+				printf("non\t\t");
+			printf("%s\n",((Logement*)logement->data)->nom);
 		}
-		printf("%s\n",((Logement*)logement->data)->nom);
 		logement=logement->suiv;
 	}
 }
@@ -779,7 +777,7 @@ Variables :
 
 void AffichLogOcup(Liste logement,Liste etud)
 {
-	printf("idEtud\ttype\tnom\tprenom\tidLogement\tnom logement\n");
+	printf("idEtud\ttype\tnom\t\tprenom\t\tidLogement\tnom logement\n");
 	printf("---------------------------------------------------------------\n");
 	while(vide(logement)==faux)
 	{
@@ -820,7 +818,12 @@ void nomEtPrenom(Liste logement, Liste etud)
 	while(vide(etud)==faux)
 	{
 		if (strcmp(((Logement*)logement->data)->idEtud,((Etudiant*)etud->data)->idEtud)==0){
-			printf("%s\t%s\n",((Etudiant*)etud->data)->nom,((Etudiant*)etud->data)->prenom);
+			printf("%s\t",((Etudiant*)etud->data)->nom);
+			if(strlen(((Etudiant*)etud->data)->nom)<8)
+				printf("\t");
+			printf("%s\t",((Etudiant*)etud->data)->prenom);
+			if(strlen(((Etudiant*)etud->data)->prenom)<8)
+				printf("\t");
 			return;
 		}
 		etud=etud->suiv;

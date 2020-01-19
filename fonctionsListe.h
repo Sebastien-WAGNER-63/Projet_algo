@@ -19,6 +19,11 @@ typedef enum{
 	faux,vrai
 }Booleen;
 
+//X
+typedef enum{
+	carac,entier,flotant,booleen,typeLog,civilite
+}Type;
+
 //Fonctions de liste
 Liste listenouv(void);
 Liste insererEnTete(Liste l, void *data);
