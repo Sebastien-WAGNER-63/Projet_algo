@@ -29,7 +29,7 @@ void global(void){
 	demande=fTraitementDem(demande,logement,etud);
 	while(1){
 		printf("\n0/\tQUITTER\n");
-		printf("1/\tCharger recharger les dernier paramètres enregistrés\n");
+		printf("1/\tCharger les dernier paramètres enregistrés\n");
 		printf("2/\tAfficher les logements disponibles\n");
 		printf("3/\tAfficher les logements occupés\n");
 		printf("4/\tAfficher les demandes de logement\n");
