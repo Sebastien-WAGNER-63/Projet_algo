@@ -47,11 +47,11 @@ typedef struct maillon
 } Maillon, *Liste;
 
 typedef enum{
-  chambre, studio, T1, T2 ->ce sont tous les types de logements trouvables, ils permettent de simplifier le code
+  chambre, studio, T1, T2	->ce sont tous les types de logements trouvables, ils permettent de simplifier le code
 }Typelog;
 
 typedef enum{
-  Mr, Mme                 ->ce sont toutes les civilités trouvables dans les fichiers, elles permettent aussi de simplifier le code
+  Mr, Mme                	 ->ce sont toutes les civilités trouvables dans les fichiers, elles permettent aussi de simplifier le code
 }Civilite;
 
 typedef enum{
