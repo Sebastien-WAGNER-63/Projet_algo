@@ -7,18 +7,18 @@
 
 /*
 Nom : global
-Finalité : séléctionner les différentes fonctions du programme
+Finalité : sélectionner les différentes fonctions du programme
 
-Description Général :
-	Charge les fichiers dans des listes
-	Traite les demandent
-	Menu pour choisir l'action a éffectuer
+Description Générale :
+	Charger les fichiers dans des listes
+	Traiter les demandes
+	Menu pour choisir l'action à effectuer
 
 Variables :
-	choix 		La fonction séléctionné dans le menu
-	logement 	Liste de logement
-	etud 		Liste d'étudiant
-	demande 	Liste de demande en attente
+	choix 		La fonction séléctionnée dans le menu
+	logement 	Liste de logements
+	etud 		Liste d'étudiants
+0	demande 	Liste de demandes en attente
 */
 void global(void){
 	Liste logement,etud,demande;
@@ -57,19 +57,19 @@ void global(void){
 Nom : fTraitementDem
 Finalité : Traiter les demandes en attente
 
-Description Général :
-	Parcour la liste de demande
-	Teste si l'étudiant existe
-	Teste si un logement compatible est disponible
-		Affiche un message, rend le logement occupé et suprime la demande si validé
+Description Générale :
+	Parcourir la liste de demandes
+	Tester si l'étudiant existe
+	Tester si un logement compatible est disponible
+		Afficher un message, rendre le logement occupé et supprimer la demande si validée
 
 Variables :
-	logement 	Liste de logement
-	etud 		Liste d'étudiant
-	demande 	Liste de demande en attente
-	etudTmp 	Liste d'un étudiant utilisé temporairement
-	logTmp 		Liste d'un logement utilisé temporairement
-	demTmp	 	Liste d'une demande utilisée etemporairement
+	logement 	Liste de logements
+	etud 		Liste d'étudiants
+	demande 	Liste de demandes en attente
+	etudTmp 	Liste d'un étudiant utilisée temporairement
+	logTmp 		Liste d'un logement utilisée temporairement
+	demTmp	 	Liste d'une demande utilisée temporairement
 */
 Liste fTraitementDem(Liste demande,Liste logement,Liste etud){
 	Liste etudTmp, logTmp, demTmp;
@@ -100,13 +100,13 @@ Liste fTraitementDem(Liste demande,Liste logement,Liste etud){
 Nom : supprimerDemande
 Finalité : Supprimer une demande en attente
 
-Description Général :
-	Teste si la liste est vide
-	Teste si l'identifiant de la demande est celui que l'on veut supprimer
-		Supprime le maillon
+Description Générale :
+	Tester si la liste est vide
+	Tester si l'identifiant de la demande est celui que l'on veut supprimer
+		Supprimer le maillon
 
 Variables :
-	l 			Liste de toute les demande en attente
+	l 			Liste de toutes les demandes en attente
 	data 		Liste d'une demande en attente à supprimer
 */
 Liste supprimerDemande(Liste l, Liste *data){
@@ -125,15 +125,15 @@ Liste supprimerDemande(Liste l, Liste *data){
 
 /*
 Nom : repDemande
-Finalité : Verrifier si un logement est compatible
+Finalité : Vérifier si un logement est compatible
 
-Description Général :
-	Parcour la liste de logement
-	Teste si il est vide, dans la bonne cité, le bon type, handicapé ou non
-	Retourne le logement valide ou NULL
+Description Générale :
+	Parcourir la liste de logement
+	Tester si il est vide, dans la bonne cité, le bon type, pour handicapé ou non
+	Retourner le logement valide ou NULL
 
 Variables :
-	l 			Liste de demande
+	l 			Liste de demandes
 	dataNom 	Nom de la cité voulu
 	dataType	Type de logement voulu
 	dataHandi	Handicapé ou pas
@@ -151,14 +151,14 @@ Liste repDemande(Liste l,void* dataNom,void* dataType, void* dataHandi){
 Nom : existeEtud
 Finalité : Chercher si un étudiant existe
 
-Description Général :
-	Teste si la liste est vide
-	Teste si l'identifiant de l'etudient est plus petit que celui que l'on cherche
-	Teste si l'identifiant de l'etudient est egal à celui que l'on cherche
-		Retourne la Le maillon de la liste de l'étudiant cherché
+Description Générale :
+	Tester si la liste est vide
+	Tester si l'identifiant de l'étudiant est plus petit que celui que l'on cherche
+	Tester si l'identifiant de l'étudiant est égal à celui que l'on cherche
+		Retourner le maillon de la liste de l'étudiant cherché
 
 Variables :
-	l 			Liste d'étudiant
+	l 			Liste d'étudiants
 	data 		Identifiant de l'étudiant recherché
 */
 Liste existeEtud(Liste l, void* data){
@@ -175,15 +175,15 @@ Liste existeEtud(Liste l, void* data){
 Nom : existeNomCite
 Finalité : Chercher si une cité universitaire existe
 
-Description Général :
-	Teste si la liste est vide
-	Teste si le nom de la cité est plus petit que celui que l'on cherche
-	Teste si le nom de la cité est egal à celui que l'on cherche
-		Retourne vrai ou faux
+Description Générale :
+	Tester si la liste est vide
+	Tester si le nom de la cité est plus petit que celui que l'on cherche
+	Tester si le nom de la cité est égal à celui que l'on cherche
+		Retourner vrai ou faux
 
 Variables :
-	l 			Liste de Logement
-	data 		Identifiant de la cité universitaire recherchée
+	l 			Liste de Logements
+	data 		Nom de la cité universitaire recherché
 */
 Booleen existeNomCite(Liste l, void* data){
 	if(vide(l)){
@@ -202,20 +202,20 @@ Booleen existeNomCite(Liste l, void* data){
 Nom : fAddDemandeLog
 Finalité : Ajouter une demande de logement et un étudiant si il n'existe pas encore
 
-Description Général :
-	Création de la demande
-	Saisie de l'identifiant del'étudiant
-		Si inexistant appel de la fonction de création de l'étudiant
-	Saisie du reste des informations de la demande
-	Insertion de la demande dans la liste
+Description Générale :
+	Créer la demande
+	Saisir l'identifiant de l'étudiant
+		Si inexistant appeler la fonction de création de l'étudiant
+	Saisir le reste des informations de la demande
+	Insérer la demande dans la liste
 
 Variables :
-	demande		Liste de demande en attente
+	demande		Liste de demandes en attente
 	etud 		Liste d'étudiants
-	logement 	Liste de logement
+	logement 	Liste de logements
 	demandeA 	Nouvelle demande
 	charTmp 	Chaîne de caractères temporaire pour les saisies
-	etudTmp		Liste d'étudiant temporaire
+	etudTmp		Liste d'étudiants temporaire
 */
 Liste fAddDemandeLog(Liste demande,Liste *etud,Liste logement){
 	DemandeA *demandeA;
@@ -284,17 +284,17 @@ Liste fAddDemandeLog(Liste demande,Liste *etud,Liste logement){
 Nom : choixIdDemande
 Finalité : Choisir un identifiant pour la nouvelle demande de manière automatique
 
-Description Général :
-	Parcour des demandes
-	Récupération de l'identifiant de la demande
-	Test si l'identifiant est different du précedent +1
-	attribué celui-ci à la nouvelle demande
+Description Générale :
+	Parcourir les demandes
+	Récupérer l'identifiant de la demande
+	Tester si l'identifiant est différent du précédent +1
+	Attribuer celui-ci à la nouvelle demande
 
 Variables :
-	demande		Liste de demande en attente
+	demande		Liste de demandes en attente
 	tab2	 	Identifiant de la nouvelle demande
 	i 		 	Compteur
-	tab 		Identifiant de la demande déja utilisé
+	tab 		Identifiant de la demande déja utilisée
 */
 void choixIdDemande(Liste demande, char tab2[]){
 	int i=1;
@@ -324,10 +324,10 @@ void choixIdDemande(Liste demande, char tab2[]){
 Nom : fAddEtud
 Finalité : Ajouter un étudiant
 
-Description Général :
-	Création de l'étudiant'
-	Saisie des informations de l'étudiant
-	Insertion de l'étudiant dans la liste
+Description Générale :
+	Créer l'étudiant
+	Saisir les informations de l'étudiant
+	Insérer l'étudiant dans la liste
 
 Variables :
 	etud		Liste d'étudiants
@@ -387,11 +387,11 @@ Liste fAddEtud(Liste etud, char* idEtud){
 
 /*
 Nom : testId
-Finalité :Tester si le format de l'identifiant est correcte
+Finalité :Tester si le format de l'identifiant est correct
 
-Description Général :
-	Teste de la taille de l'identifiant
-	Teste de son contenue
+Description Générale :
+	Tester la taille de l'identifiant
+	Tester son contenu
 
 Variables :
 	id 			Identifiant
@@ -412,9 +412,9 @@ Booleen testId(char* id){
 Nom : saisieBooleen
 Finalité : Saisir une information de type oui ou non
 
-Description Général :
-	Saisie de la réponse
-	Teste de son contenue
+Description Générale :
+	Saisir la réponse
+	Tester son contenu
 
 Variables :
 	charTmp 		Chaîne de caractères temporaire pour les saisies
@@ -438,14 +438,14 @@ Booleen saisieBooleen(void){
 Nom : chargeLogement
 Finalité : Charger le tableau logement
 
-Description Général :
-	crée une nouvelle liste
-	charge la liste logement depuis le fichier correspondant
-	retourne la liste
+Description Générale :
+	Créer une nouvelle liste
+	Charger la liste logement depuis le fichier correspondant
+	Retourner la liste
 
 Variables :
-	l		liste logement
-	log		variable de type logement
+	l		Liste logements
+	log		Variable de type logement
 */
 
 Liste chargeLogement(void)
@@ -473,13 +473,12 @@ Liste chargeLogement(void)
 Nom : lectureLogement
 Finalité : lire un logement
 
-Description Général :
-	fait la lecture d'un logement
-	depuis le fichier donner en argument
-	et retourne le logement
+Description Générale :
+	Faire la lecture d'un logement depuis le fichier donné en argument
+	Retourner le logement
 
 Variables :
-	log		variable de type logement
+	log		Variable de type logement
 */
 
 Logement* lectureLogement(FILE *flot)
@@ -507,10 +506,10 @@ Logement* lectureLogement(FILE *flot)
 
 /*
 Nom : insertionLog
-Finalité : inserre les logment dans la liste
+Finalité : insérer les logements dans la liste
 
-Description Général :
-	inserre par ordre alphabétique les logements
+Description Générale :
+	Insérer par ordre alphabétique les logements
 */
 
 Liste insertionLog(Liste l, void* data){
@@ -526,16 +525,16 @@ Liste insertionLog(Liste l, void* data){
 
 /*
 Nom : chargeEtud
-Finalité : Charger le tableau etudiant
+Finalité : Charger le tableau étudiant
 
-Description Général :
-	crée une nouvelle liste
-	charge la liste etudiant depuis le fichier correspondant
-	retourne la liste
+Description Générale :
+	Créer une nouvelle liste
+	Charger la liste étudiant depuis le fichier correspondant
+	Retourner la liste
 
 Variables :
-	l		liste etudiant
-	log		variable de type etudiant
+	l		Liste etudiant
+	log		Variable de type etudiant
 */
 
 Liste chargeEtud(void)
@@ -563,13 +562,12 @@ Liste chargeEtud(void)
 Nom : lectureEtud
 Finalité : lire un étudiant
 
-Description Général :
-	fait la lecture d'un étudiant
-	depuis le fichier donné en argument
-	retourne l'étudiant
+Description Générale :
+	Lire un étudiant depuis le fichier donné en argument
+	Retourner l'étudiant
 
 Variables :
-	etud		variable de type etudiant
+	etud		Variable de type étudiant
 */
 
 Etudiant* lectureEtud(FILE *flot)
@@ -607,11 +605,10 @@ Etudiant* lectureEtud(FILE *flot)
 
 /*
 Nom : insertionEtud
-Finalité : inserre les étudiant dans la liste
+Finalité : insérer les étudiants dans la liste
 
-Description Général :
-	inserre les l'étudiant dans la liste
-	par ordre alphabétique
+Description Générale :
+	Insérer l'étudiant dans la liste par ordre alphabétique
 */
 
 Liste insertionEtud(Liste l, void* data){
@@ -632,14 +629,14 @@ Liste insertionEtud(Liste l, void* data){
 Nom : chargeDemande
 Finalité : Charger le tableau demande
 
-Description Général :
-	crée une nouvelle liste
-	charge la liste demande depuis le fichier correspondant
-	retourne la liste
+Description Générale :
+	Créer une nouvelle liste
+	Charger la liste demande depuis le fichier correspondant
+	Retourner la liste
 
 Variables :
-	l		liste demande
-	demande		variable de type demande
+	l			Liste demande
+	demande		Variable de type demande
 */
 
 Liste chargeDemande(void)
@@ -668,13 +665,12 @@ Liste chargeDemande(void)
 Nom : lectureDemande
 Finalité : lire une demande
 
-Description Général :
-	fait la lecture d'une demande
-	depuis le fichier donné en argument
-	retourne la demande
+Description Générale :
+	Faire la lecture d'une demande depuis le fichier donné en argument
+	Retourner la demande
 
 Variables :
-	demande		variable de type demande
+	demande		Variable de type demande
 */
 
 DemandeA* lectureDemande(FILE *flot)
@@ -700,15 +696,14 @@ DemandeA* lectureDemande(FILE *flot)
 
 /*
 Nom : insertionDemmande
-Finalité : inserre les demandes dans la liste
+Finalité : Insérer les demandes dans la liste
 
-Description Général :
-	inserre les demandes dans la liste
-	par ordre alphabétique
+Description Générale :
+	Insérer les demandes dans la liste par ordre alphabétique
 	
 Variables :
-	l		liste des demandes
-	data		la demande à inserer
+	l			Liste des demandes
+	data		La demande à insérer
 */
 
 Liste insertionDemande(Liste l, void* data){
@@ -729,12 +724,11 @@ Liste insertionDemande(Liste l, void* data){
 Nom : Affichlog
 Finalité : afficher la liste logement
 
-Description Général :
-	afficher les logements innocupés
-	depuis la liste donné en argument
+Description Générale :
+	Afficher les logements innocupés depuis la liste donnée en argument
 	
 Variables :
-	logement		liste logement a afficher
+	logement		Liste logement à afficher
 */
 
 void AffichLog(Liste logement)
@@ -768,12 +762,11 @@ Nom : AffichlogOcup
 Finalité : afficher la liste logement occupé
 
 Description Général :
-	afficher les logements occupé
-	avec le nom de l'ocupant
+	Afficher les logements occupés avec le nom de l'occupant
 	
 Variables :
-	logement		liste logement a afficher
-	etud			liste des etudiants
+	logement		Liste logement à afficher
+	etud			Liste des étudiants
 */
 
 void AffichLogOcup(Liste logement,Liste etud)
@@ -804,14 +797,13 @@ void AffichLogOcup(Liste logement,Liste etud)
 Nom : nomEtPrenom
 Finalité : trouver l'étudiant qui occupe le logement
 
-Description Général :
-	parcour la liste étudiant pour trouver
-	l'étudiant qui correspond au logement
-	et affiche son nom et son prénom
+Description Générale :
+	Parcourir la liste étudiant pour trouver l'étudiant qui correspond au logement
+	Afficher son nom et son prénom
 	
 Variables :
-	logement		liste logement
-	etud			liste des etudiants
+	logement		Liste logement
+	etud			Liste des étudiants
 */
 
 void nomEtPrenom(Liste logement, Liste etud)
@@ -838,11 +830,11 @@ void nomEtPrenom(Liste logement, Liste etud)
 Nom : AffichDemande
 Finalité : afficher la liste demande
 
-Description Général :
-	affiche l'intégralité de la liste des demandes
+Description Générale :
+	Afficher l'intégralité de la liste des demandes
 	
 Variables :
-	demande		liste des demandes
+	demande		Liste des demandes
 */
 
 void AffichDemande(Liste demande)
@@ -865,15 +857,15 @@ void AffichDemande(Liste demande)
 	}
 }
 
+//Titouan
+
 /*
 Nom : fAnnulDemande
 Finalité : Annulation d'une demande de logement
-
 Description Général :
 	demande à l'utilisateur l'identifiant de la demande à annuler
 	cherche cette demande dans la liste demande
 	supprimer la demande si présente dans la liste demande
-
 Variables :
 	demande 	liste des demandes
 */
@@ -888,7 +880,7 @@ Liste fAnnulDemande(Liste demande){
 	}
 	printf("Tapez l'identifiant de la demande à supprimer\n");
 	scanf("%s",idDemandeSup);
-	
+
 	while(vide(demBis)==faux)
 	{
 		if(strcmp(idDemandeSup, ((DemandeA*)demBis->data)->idDemande)==0)

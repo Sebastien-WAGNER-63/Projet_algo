@@ -8,9 +8,9 @@
 Nom : listenouv
 Finalité : Créer une nouvelle liste vide
 
-Description Général :
-	Créer un pointeur sur un mailon
-	L'initialise a NULL
+Description Générale :
+	Créer un pointeur sur un maillon
+	L'initialiser à NULL
 
 Variables :
 	l 			Nouvelle liste
@@ -23,17 +23,17 @@ Liste listenouv(void){
 
 /*
 Nom : insererEnTete
-Finalité : Inserer un maillon au début d'une liste
+Finalité : Insérer un maillon au début d'une liste
 
-Description Général :
+Description Générale :
 	Créer un mailon
-	Lui atribué les valeurs voulus
-	Lui donnée comme maillon suivant le premier de la liste
+	Lui attribuer les valeurs voulues
+	Lui donner comme maillon suivant le premier de la liste
 
 Variables :
-	l 			Liste dans laquelle inserer la valeur
+	l 			Liste dans laquelle insérer la valeur
 	m 			Nouveau maillon
-	data		Valeur a inserer
+	data		Valeur à insérer
 */
 Liste insererEnTete(Liste l, void *data){
 	Maillon *m;
@@ -51,7 +51,7 @@ Liste insererEnTete(Liste l, void *data){
 Nom : vide
 Finalité : Tester si la liste est vide
 
-Description Général :
+Description Générale :
 	Tester si le premier maillon de la liste est nul
 
 Variables :
@@ -67,11 +67,11 @@ Booleen vide(Liste l){
 Nom : tete
 Finalité : Retourner la valeur de tête de la liste
 
-Description Général :
+Description Générale :
 	Retourner la valeur du premier maillon de la liste
 
 Variables :
-	l 			Liste dans laquelle se trouve la valeur a retourner
+	l 			Liste dans laquelle se trouve la valeur à retourner
 */
 void *tete (Liste l){
 	if(vide(l)){
@@ -86,9 +86,9 @@ void *tete (Liste l){
 Nom : supprimerEnTete
 Finalité : Supprimer le maillon de début de liste
 
-Description Général :
+Description Générale :
 	Créer un nouveau maillon
-	attribuer la valeur du premier maillon au nouveauu
+	Attribuer la valeur du premier maillon au nouveauu
 	Attribuer la valeur du maillon suivant au premier
 	Supprimer le maillon temporaire
 	Retourner la liste

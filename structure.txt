@@ -18,10 +18,10 @@ L00002
 E00001            ->idEtudiant
 0                 ->civilité (0=Mr, 1=Mme)
 Benoit            ->nom
-Mussard           ->prenom
+Mussard           ->prénom
 1                 ->bourse (0=non; 1=oui) si oui l'échelon est donné juste après
 5                 ->échelon de bourse
-1                 ->handicape (0=non; 1=oui)
+1                 ->handicapé (0=non; 1=oui)
 E00002
 .
 .
@@ -31,8 +31,8 @@ E00002
 
 D00004            ->idDemande
 E00003            ->idEtudiant demandeur
-7                 ->echelon (0 si non boursier)
-Cité des Cézaux   ->cité demandé
+7                 ->échelon (0 si non boursier)
+Cité des Cézaux   ->cité demandée
 1                 ->type de logement demandé
 D00001
 .
@@ -47,24 +47,24 @@ typedef struct maillon
 } Maillon, *Liste;
 
 typedef enum{
-  chambre, studio, T1, T2 ->ce sont tous les types de logements trouvables, il perment de simplifier le code
+  chambre, studio, T1, T2 ->ce sont tous les types de logements trouvables, ils permettent de simplifier le code
 }Typelog;
 
 typedef enum{
-  Mr, Mme                 ->ce sont toutes les civilités trouvables dans les fichiers, elles permentent aussi de simplifier le code
+  Mr, Mme                 ->ce sont toutes les civilités trouvables dans les fichiers, elles permettent aussi de simplifier le code
 }Civilite;
 
 typedef enum{
-	faux,vrai               ->il permet de mettre un nom sur les possibilités dans le fichier afen de simplifier le code           (handicape,boursier...)
+	faux,vrai               ->il permet de mettre un nom sur les possibilités dans le fichier afin de simplifier le code           (handicapé,boursier...)
 }Booleen;
 
 typedef struct{
   char idLogement[7];     ->identifiant du logement
-  char * nom;             ->nom de la cité etudiante
+  char * nom;             ->nom de la cité étudiante
   Typelog type;           ->type du logement (studio,chambre,T1,T2)
   Booleen dispo;          ->booleen qui annonce si le logement est disponible
   Booleen handicap;       ->booleen qui annonce si le logement est adapté aux handicapés
-  char idEtud[7];         ->si le logement est occupé alors ce champ renseigne l'identifiant de l'étudiant en qustion
+  char idEtud[7];         ->si le logement est occupé alors ce champ renseigne l'identifiant de l'étudiant en question
 }Logement;
 
 typedef struct{
@@ -73,7 +73,7 @@ typedef struct{
   char *nom;              ->son nom
   char *prenom;           ->son prénom
   Booleen bourse;         ->booleen qui annonce si l'étudiant est boursier
-  int echelon;            ->si l'étudiant est boursier alors ce champ renseigne de l'échelon de sa bourse
+  int echelon;            ->si l'étudiant est boursier alors ce champ renseigne l'échelon de sa bourse
   Booleen handicap;       ->booleen qui annonce si l'étudiant est handicapé
 }Etudiant;
 
@@ -81,33 +81,33 @@ typedef struct{
   char idDemande[7];      ->identifiant de la demande
   char idEtud[7];         ->identifiant de l'étudiant demandeur
   int echelon;            ->donne l'échelon de la bourse, 0 si il ne possède pas de bourse
-  char *nomCite;          ->ce champ renseigne la cité demandé par l'étudiant
+  char *nomCite;          ->ce champ renseigne la cité demandée par l'étudiant
   Typelog type;           ->ce champ renseigne du type de logement demandé par l'étudiant
 }DemandeA;
 
-Lorseque nous voulons utiliser les données dans un maillon (void *data), nous devons "caster" les données.
-En effet puisque les données stockés n'ont pas de type défini, nous devons préciser de quel type est la donné souhaité (logement, etudiant ou demande).
+Lorsque nous voulons utiliser les données dans un maillon (void *data), nous devons "caster" les données.
+En effet puisque les données stockées n'ont pas de type défini, nous devons préciser de quel type est la donnée souhaitée (logement, etudiant ou demande).
 Exemple : pour accéder à l'identifiant d'un logement nous devons utiliser cette forme de chemin
-((Logement*)logement->data)->idLogement, la partie "((Logement*)logement->data)" précise que le type demendé est un pointeur sur un logement et la partie "->idLogement" est l'endroit où nous voulons accéder.
-L'utilisation du void *data permet d'utiliser qu'une seul structure de maillon pour tous les types de structures ce qui simplifie notre code.
+((Logement*)logement->data)->idLogement, la partie "((Logement*)logement->data)" précise que le type demandé est un pointeur sur un logement et la partie "->idLogement" est l'endroit où nous voulons accéder.
+L'utilisation du void *data permet d'utiliser qu'une seule structure de maillon pour tous les types de structures ce qui simplifie notre code.
 
-Liste des fonctionnalitée : 
+Liste des fonctionnalités : 
 
-1) Charger les dernier paramètres enregistrés
+1) Charger les derniers paramètres enregistrés
 	Permet de recréer les listes à partir des trois fichiers.
 2) Afficher les logements disponibles
-	Permet d'afficher la liste de tous les logement qui ne sont pas occupée
+	Permet d'afficher la liste de tous les logements qui ne sont pas occupés
 3) Afficher les logements occupés
-	Permet d'afficher la liste de tous les logement qui sont occupée
+	Permet d'afficher la liste de tous les logements qui sont occupés
 4) Afficher les demandes de logement
 	Permet d'afficher la liste de toutes les demandes de logement en attente
 5) Traitement des demandes en attente
-	Permet d'attribuer aux étudiants dans l'odre décroissant d'échelon de bourse des logement selon leurs diponibilité et la demande de l'étudiant
+	Permet d'attribuer aux étudiants dans l'odre décroissant d'échelon de bourse des logements selon leur diponibilité et la demande de l'étudiant
 6) Saisie d'une nouvelle demande de logement
-	Permet de saisir une nouvelle demande de logement et de saisir l'étudiant au cas ou il ne soit pas encore crée
+	Permet de saisir une nouvelle demande de logement et de saisir l'étudiant au cas où il ne soit pas encore créé
 7) Annulation d'une demande de logement
 	Permet de supprimer une demande de logement
-8) Liberation logement
+8) Libération logement
 	Permet de faire partir un étudiant d'un logement et de relancer le traitement des demandes de logement automatiquement.
 9) Sauvegarde
-	Permet de réecrire les trois listes dans les fichier afin de sauvegarder les modifications
+	Permet de réécrire les trois listes dans les fichiers afin de sauvegarder les modifications

@@ -25,7 +25,7 @@ typedef struct{
   Booleen handicap;
 }Etudiant;
 
-//Structure des Demandes en Attente
+//Structure des demandes en attente
 typedef struct{
   // Forme de idDemande : 'D00001','D00002'...
   char idDemande[7];

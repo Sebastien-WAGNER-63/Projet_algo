@@ -4,12 +4,12 @@ typedef struct maillon
 	struct maillon * suiv;
 } Maillon, *Liste;
 
-//Different types de logements
+//Différents types de logements
 typedef enum{
   chambre, studio, T1, T2
 }Typelog;
 
-//Different types de civilité
+//Différents types de civilités
 typedef enum{
   Mr, Mme
 }Civilite;
