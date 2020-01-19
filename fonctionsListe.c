@@ -4,12 +4,37 @@
 #include <string.h>
 #include "fonctionsListe.h"
 
+/*
+Nom : listenouv
+Finalité : Créer une nouvelle liste vide
+
+Description Général :
+	Créer un pointeur sur un mailon
+	L'initialise a NULL
+
+Variables :
+	l 			Nouvelle liste
+*/
 Liste listenouv(void){
 	Liste l;
 	l=NULL;
 	return l;
 }
 
+/*
+Nom : insererEnTete
+Finalité : Inserer un maillon au début d'une liste
+
+Description Général :
+	Créer un mailon
+	Lui atribué les valeurs voulus
+	Lui donnée comme maillon suivant le premier de la liste
+
+Variables :
+	l 			Liste dans laquelle inserer la valeur
+	m 			Nouveau maillon
+	data		Valeur a inserer
+*/
 Liste insererEnTete(Liste l, void *data){
 	Maillon *m;
 	m=(Maillon *) malloc (sizeof(Maillon));
@@ -22,34 +47,32 @@ Liste insererEnTete(Liste l, void *data){
 	return m;
 }
 
+/*
+Nom : vide
+Finalité : Tester si la liste est vide
+
+Description Général :
+	Tester si le premier maillon de la liste est nul
+
+Variables :
+	l 			Liste à tester
+*/
 Booleen vide(Liste l){
 	if(l==NULL)
 		return vrai;
 	return faux;
 }
 
+/*
+Nom : tete
+Finalité : Retourner la valeur de tête de la liste
 
-//X
-//version it
-void affichageListeIt(Liste l,Type type){
-	while(!vide(l)){
-		if(type==entier)
-			printf("%d\n",*(int*)l->data);
-		if(type==flotant)
-			printf("%.2f\n",*(float*)l->data);
-		if(type==carac)
-			printf("%s\n",(char*)l->data);
-		if(type==booleen)
-			printf("%d\n",*(Booleen*)l->data);
-		if(type==typeLog)
-			printf("%d\n",*(Typelog*)l->data);
-		if(type==civilite)
-			printf("%d\n",*(Civilite*)l->data);
-		l=l->suiv;
-	}
-}
+Description Général :
+	Retourner la valeur du premier maillon de la liste
 
-
+Variables :
+	l 			Liste dans laquelle se trouve la valeur a retourner
+*/
 void *tete (Liste l){
 	if(vide(l)){
 		printf("opperation interdite\n");
@@ -59,60 +82,21 @@ void *tete (Liste l){
 }
 
 
-//X
-//version it
-int longueurIt(Liste l){
-	int cpt=0;
-	while(!vide(l)){
-		cpt++;
-		l=l->suiv;
-	}
-	return cpt;
-}
+/*
+Nom : supprimerEnTete
+Finalité : Supprimer le maillon de début de liste
 
-//X
-Booleen existe(Liste l, void* data, Type type){
-	if(vide(l))
-		return faux;
-	if(type==entier){
-		if(*(int*)data<*(int*)tete(l)) //que si la liste est triée
-			return faux;
-		if (*(int*)data==*(int*)tete(l))
-			return vrai;
-	}
-	if(type==flotant){
-		if(*(float*)data<*(float*)tete(l)) //que si la liste est triée
-			return faux;
-		if (*(float*)data==*(float*)tete(l))
-			return vrai;
-	}
-	if(type==carac){
-		if(strcmp((char*)data,(char*)tete(l))<0) //que si la liste est triée
-			return faux;
-		if (strcmp((char*)data,(char*)tete(l))==0)
-			return vrai;
-	}
-	if(type==booleen){
-		if(*(Booleen*)data<*(Booleen*)tete(l)) //que si la liste est triée
-			return faux;
-		if (*(Booleen*)data==*(Booleen*)tete(l))
-			return vrai;
-	}
-	if(type==typeLog){
-		if(*(Typelog*)data<*(Typelog*)tete(l)) //que si la liste est triée
-			return faux;
-		if (*(Typelog*)data==*(Typelog*)tete(l))
-			return vrai;
-	}
-	if(type==civilite){
-		if(*(Civilite*)data<*(Civilite*)tete(l)) //que si la liste est triée
-			return faux;
-		if (*(Civilite*)data==*(Civilite*)tete(l))
-			return vrai;
-	}
-	return existe(l->suiv,data,type);
-}
+Description Général :
+	Créer un nouveau maillon
+	attribuer la valeur du premier maillon au nouveauu
+	Attribuer la valeur du maillon suivant au premier
+	Supprimer le maillon temporaire
+	Retourner la liste
 
+Variables :
+	l 			Liste dans laquelle on veut supprimer le début
+	m 			Maillon temporaire pour supprimer définitivement le premier maillon
+*/
 Liste supprimerEnTete(Liste l){
 	Maillon *m;
 	if(vide(l)){
@@ -123,106 +107,4 @@ Liste supprimerEnTete(Liste l){
 	l=l->suiv;
 	free(m);
 	return l;
-}
-
-//X
-Liste insertion(Liste l, void* data, Type type){
-	if(vide(l))
-		return insererEnTete(l,data);
-	if(type==entier){
-		if(*(int*)data<*(int*)tete(l))
-			return insererEnTete(l,data);
-		if(*(int*)data==*(int*)tete(l))
-			return l;
-	}
-	if(type==flotant){
-		if(*(float*)data<*(float*)tete(l))
-			return insererEnTete(l,data);
-		if(*(float*)data==*(float*)tete(l))
-			return l;
-	}
-	if(type==carac){
-		if(strcmp((char*)data,(char*)tete(l))<0)
-			return insererEnTete(l,data);
-		if(strcmp((char*)data,(char*)tete(l))==0)
-			return l;
-	}
-	if(type==booleen){
-		if(*(Booleen*)data<*(Booleen*)tete(l))
-			return insererEnTete(l,data);
-		if(*(Booleen*)data==*(Booleen*)tete(l))
-			return l;
-	}
-	if(type==typeLog){
-		if(*(Typelog*)data<*(Typelog*)tete(l))
-			return insererEnTete(l,data);
-		if(*(Typelog*)data==*(Typelog*)tete(l))
-			return l;
-	}
-	if(type==civilite){
-		if(*(Civilite*)data<*(Civilite*)tete(l))
-			return insererEnTete(l,data);
-		if(*(Civilite*)data==*(Civilite*)tete(l))
-			return l;
-	}
-	l->suiv=insertion(l->suiv,data,type);
-	return l;
-}
-
-//X
-Liste supprimer(Liste l, void* data,Type type){
-	if(vide(l))
-		return l;
-	if(type==entier){
-		if(*(int*)data<*(int*)tete(l))
-			return l;
-		if(*(int*)data==*(int*)tete(l))
-			return supprimerEnTete(l);
-	}
-	if(type==flotant){
-		if(*(float*)data<*(float*)tete(l))
-			return l;
-		if(*(float*)data==*(float*)tete(l))
-			return supprimerEnTete(l);
-	}
-	if(type==carac){
-		if(strcmp((char*)data,(char*)tete(l))<0)
-			return l;
-		if(strcmp((char*)data,(char*)tete(l))==0)
-			return supprimerEnTete(l);
-	}
-	if(type==booleen){
-		if(*(Booleen*)data<*(Booleen*)tete(l))
-			return l;
-		if(*(Booleen*)data==*(Booleen*)tete(l))
-			return supprimerEnTete(l);
-	}
-	if(type==typeLog){
-		if(*(Typelog*)data<*(Typelog*)tete(l))
-			return l;
-		if(*(Typelog*)data==*(Typelog*)tete(l))
-			return supprimerEnTete(l);
-	}
-	if(type==civilite){
-		if(*(Civilite*)data<*(Civilite*)tete(l))
-			return l;
-		if(*(Civilite*)data==*(Civilite*)tete(l))
-			return supprimerEnTete(l);
-	}
-	l->suiv=supprimer(l->suiv,data,type);
-	return l;
-}
-
-//X
-Liste insertionEnQueu(Liste l, void* data){
-	if(vide(l))
-		return insererEnTete(l,data);
-	l->suiv=insertionEnQueu(l->suiv,data);
-	return l;
-}
-
-//X
-void supprimerListe(Liste l){
-	while(!vide(l))
-		l=supprimerEnTete(l);
 }
