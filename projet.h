@@ -68,7 +68,7 @@ Booleen testId(char* id);
 Booleen saisieBooleen(void);
 
 //Q7
-void fAnnulDemande(Liste demande);
+Liste fAnnulDemande(Liste demande);
 //Q8
 void fDepartEtud(Liste logement);
 //Q9
