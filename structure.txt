@@ -90,3 +90,24 @@ En effet puisque les données stockés n'ont pas de type défini, nous devons pr
 Exemple : pour accéder à l'identifiant d'un logement nous devons utiliser cette forme de chemin
 ((Logement*)logement->data)->idLogement, la partie "((Logement*)logement->data)" précise que le type demendé est un pointeur sur un logement et la partie "->idLogement" est l'endroit où nous voulons accéder.
 L'utilisation du void *data permet d'utiliser qu'une seul structure de maillon pour tous les types de structures ce qui simplifie notre code.
+
+Liste des fonctionnalitée : 
+
+1) Charger les dernier paramètres enregistrés
+	Permet de recréer les listes à partir des trois fichiers.
+2) Afficher les logements disponibles
+	Permet d'afficher la liste de tous les logement qui ne sont pas occupée
+3) Afficher les logements occupés
+	Permet d'afficher la liste de tous les logement qui sont occupée
+4) Afficher les demandes de logement
+	Permet d'afficher la liste de toutes les demandes de logement en attente
+5) Traitement des demandes en attente
+	Permet d'attribuer aux étudiants dans l'odre décroissant d'échelon de bourse des logement selon leurs diponibilité et la demande de l'étudiant
+6) Saisie d'une nouvelle demande de logement
+	Permet de saisir une nouvelle demande de logement et de saisir l'étudiant au cas ou il ne soit pas encore crée
+7) Annulation d'une demande de logement
+	Permet de supprimer une demande de logement
+8) Liberation logement
+	Permet de faire partir un étudiant d'un logement et de relancer le traitement des demandes de logement automatiquement.
+9) Sauvegarde
+	Permet de réecrire les trois listes dans les fichier afin de sauvegarder les modifications
