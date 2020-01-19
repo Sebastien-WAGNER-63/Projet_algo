@@ -740,12 +740,12 @@ Variables :
 
 void AffichLog(Liste logement)
 {
-	printf("idLogement\tnom\t\t\ttype logement\thandicap\n");
+	printf("idLogement\ttype logement\thandicap\tnom\n");
 	printf("------------------------------------------------------------------\n");
 	while(vide(logement)==faux)
 	{
 		if (((Logement*)logement->data)->dispo==vrai){
-			printf("%s\t\t%s\t\t",((Logement*)logement->data)->idLogement,((Logement*)logement->data)->nom);
+			printf("%s\t",((Logement*)logement->data)->idLogement);
 			if (((Logement*)logement->data)->type==0)
 				printf("chambre\t");
 			if (((Logement*)logement->data)->type==1)
@@ -755,10 +755,11 @@ void AffichLog(Liste logement)
 			if (((Logement*)logement->data)->type==3)
 				printf("T2\t");
 			if (((Logement*)logement->data)->handicap==vrai)
-				printf("\toui\n");
+				printf("oui\t");
 			else
-				printf("\tnon\n");
+				printf("\tnon\t");
 		}
+		printf("%s\n",((Logement*)logement->data)->nom);
 		logement=logement->suiv;
 	}
 }
@@ -778,12 +779,12 @@ Variables :
 
 void AffichLogOcup(Liste logement,Liste etud)
 {
-	printf("idLogement\tnom logement\tidEtud\ttype\tnom\tprenom\n");
+	printf("idEtud\ttype\tnom\tprenom\tidLogement\tnom logement\n");
 	printf("---------------------------------------------------------------\n");
 	while(vide(logement)==faux)
 	{
 		if (((Logement*)logement->data)->dispo==faux){
-			printf("%s\t\t%s\t%s",((Logement*)logement->data)->idLogement,((Logement*)logement->data)->nom,((Logement*)logement->data)->idEtud);
+			printf("%s",((Logement*)logement->data)->idEtud);
 			if (((Logement*)logement->data)->type==0)
 				printf("\tchambre\t");
 			if (((Logement*)logement->data)->type==1)
@@ -793,6 +794,7 @@ void AffichLogOcup(Liste logement,Liste etud)
 			if (((Logement*)logement->data)->type==3)
 				printf("\tT2\t");
 			nomEtPrenom(logement,etud);
+			printf("%s\t\t%s\n",((Logement*)logement->data)->idLogement,((Logement*)logement->data)->nom);
 		}
 		logement=logement->suiv;
 	}
@@ -806,6 +808,7 @@ Finalité : trouver l'étudiant qui occupe le logement
 Description Général :
 	parcour la liste étudiant pour trouver
 	l'étudiant qui correspond au logement
+	et affiche son nom et son prénom
 	
 Variables :
 	logement		liste logement
@@ -840,19 +843,20 @@ Variables :
 
 void AffichDemande(Liste demande)
 {
-	printf("idDemande\tidEtud\techelon\tnom de cité\t\ttype\n");
+	printf("idDemande\tidEtud\techelon\ttype\tnom de cité\n");
 	printf("--------------------------------------------------------------\n");
 	while(vide(demande)==faux)
 	{
-		printf("%s\t\t%s\t%d\t%s\t",((DemandeA*)demande->data)->idDemande,((DemandeA*)demande->data)->idEtud,((DemandeA*)demande->data)->echelon,((DemandeA*)demande->data)->nomCite);
+		printf("%s\t\t%s\t%d",((DemandeA*)demande->data)->idDemande,((DemandeA*)demande->data)->idEtud,((DemandeA*)demande->data)->echelon);
 		if (((DemandeA*)demande->data)->type==0)
-			printf("\tchambre\n");
+			printf("\tchambre\t");
 		if (((DemandeA*)demande->data)->type==1)
-			printf("\tstudio\n");
+			printf("\tstudio\t");
 		if (((DemandeA*)demande->data)->type==2)
-			printf("\tT1\n");
+			printf("\tT1\t");
 		if (((DemandeA*)demande->data)->type==3)
-			printf("\tT2\n");
+			printf("\tT2\t");
+		printf("%s\n",((DemandeA*)demande->data)->nomCite);
 		demande=demande->suiv;
 	}
 }
