@@ -47,6 +47,8 @@ void global(void){
 			case 5 : demande=fTraitementDem(demande,logement,etud);break;
 			case 6 : demande=fAddDemandeLog( demande, &etud, logement);break;
 			case 7 : demande=fAnnulDemande(demande);break;
+			case 8 : fDepartEtud(&logement, &etud, &demande);break;
+			case 9 : fSauvegarde(demande, logement, etud);break;
 			default : exit(1); 
 		}
 	}
@@ -870,10 +872,12 @@ void AffichDemande(Liste demande)
 /*
 Nom : fAnnulDemande
 Finalité : Annulation d'une demande de logement
+
 Description Général :
 	demande à l'utilisateur l'identifiant de la demande à annuler
 	cherche cette demande dans la liste demande
 	supprimer la demande si présente dans la liste demande
+
 Variables :
 	demande 	liste des demandes
 */
@@ -881,14 +885,13 @@ Variables :
 Liste fAnnulDemande(Liste demande){
 	char idDemandeSup[7]={0};
 	Liste demBis = demande;
-	if(vide(demBis))
+	if(vide(demBis)==vrai)
 	{
 		printf("Aucune demandes à supprimer\n");
 		return demande;
 	}
 	printf("Tapez l'identifiant de la demande à supprimer\n");
 	scanf("%s",idDemandeSup);
-
 	while(vide(demBis)==faux)
 	{
 		if(strcmp(idDemandeSup, ((DemandeA*)demBis->data)->idDemande)==0)
@@ -900,4 +903,300 @@ Liste fAnnulDemande(Liste demande){
 	}
 	printf("Demande non existante\n");
 	return demande;
+}
+
+/*
+Nom : supprimerEtud
+Finalité : supprimer un étudiant
+
+Description Général :
+	teste si la liste est vide
+	teste si l'identifiant de l'étudiant est celui que l'on veut supprimer
+		supprime le maillon
+
+Variables :
+	l 		liste des étudiants
+	data 	liste d'un étudiant à supprimer
+*/
+Liste supprimerEtud(Liste l, Liste *data)
+{
+	if(vide(l)){
+		printf("vide\n");
+		return l;
+	}
+	if(strcmp(((Etudiant*)(*data)->data)->idEtud,((Etudiant*)l->data)->idEtud)==0){
+		l=supprimerEnTete(l);
+		*data=l;
+		return l;
+	}
+	l->suiv=supprimerDemande(l->suiv,data);
+	return l;
+}
+
+/*
+Nom : fDepartEtud
+Finalité : Supprimer les demandes de logements/logements occupés par un étudiant si celui-ci part
+
+Description Général : 
+	teste si la liste des étudiants est vide
+	demande de rentrer l'identifiant d'un étudiant
+	teste si il existe
+	supprime ses demandes de logements
+	rends disponible les logements qui était occupés par l'étudiant
+	traite les demandes en attentes si des logement ont été libéré
+
+Variables :
+	*logement 	pointeur sur la liste des logements
+	*etud 		pointeur sur la liste des étudiants
+	*demande 	pointeur sur la liste des demandes en attentes
+*/
+void fDepartEtud(Liste *logement, Liste *etud, Liste *demande)
+{
+	Liste etudBis=*etud, demBis=*demande;
+	Booleen valid=faux, existe=faux, avoirLog=faux;
+	char idEtudiant[7]={0};
+	if(vide(etudBis)==vrai)
+	{
+		printf("Aucun étudiants à supprimer\n");
+		exit(1);
+	}
+	while(valid==faux)
+	{
+		printf("Rentrez l'identifiant de l'étudiant s'en allant :\n");
+		scanf("%s",idEtudiant);
+		valid=testId(idEtudiant);
+	}
+	while(vide(etudBis)==faux)
+	{	
+		if(strcmp(idEtudiant, ((Etudiant*)etudBis->data)->idEtud)==0)
+		{
+			*etud=supprimerEtud(*etud, &etudBis);
+			existe=vrai;
+			continue;
+		}
+		etudBis=etudBis->suiv;
+	}
+
+	if(existe==faux)
+	{
+		printf("étudiant non existant\n");
+		exit(1);
+	}
+	while(vide(demBis)==faux)
+	{
+		if(strcmp(idEtudiant, ((DemandeA*)demBis->data)->idEtud)==0)
+		{
+			*demande=supprimerDemande(*demande, &demBis);
+			if(vide(*demande)==vrai)
+				continue;
+		}
+
+		demBis=demBis->suiv;
+	}
+	while(vide(*logement)==faux)
+	{
+		if(((Logement*)(*logement)->data)->dispo==0)
+		{
+			if(strcmp(idEtudiant, ((Logement*)(*logement)->data)->idEtud)==0)
+			{
+				((Logement*)(*logement)->data)->dispo=1;
+				printf("logement n°%s libéré\n",((Logement*)(*logement)->data)->idLogement);
+				avoirLog=vrai;	
+			}
+		}
+		(*logement)=(*logement)->suiv;
+	}
+	if(avoirLog==vrai)
+		*demande=fTraitementDem(*demande,*logement,*etud);
+	else
+		printf("l'étudiant n'avait pas de logement\n");
+}
+
+
+/*
+Nom : fSauvegardeDemande
+Finalité : sauvegarder dans le fichier demandesEnAttente.fic la liste de demandes stockée en mémoire
+
+Description général :
+	tant que la liste de demandes n'est pas vide
+		ecrit chacun de ses éléments dans le fichier demandesEnAttente.fic
+
+Variables :
+	demande 	liste des demandes en attentes	
+	*flot1 		fichier demandesEnAttente.fic
+*/
+void fSauvegardeDemande(Liste demande, FILE *flot1)
+{
+	while(vide(demande)==faux)
+	{
+		fprintf(flot1,"%s\n%s\n%d\n%s\n",((DemandeA*)demande->data)->idDemande,((DemandeA*)demande->data)->idEtud,((DemandeA*)demande->data)->echelon,((DemandeA*)demande->data)->nomCite);
+		if(vide(demande->suiv)==vrai)
+		{
+			if (((DemandeA*)demande->data)->type==0)
+				fprintf(flot1,"0");
+			if (((DemandeA*)demande->data)->type==1)
+				fprintf(flot1,"1");
+			if (((DemandeA*)demande->data)->type==2)
+				fprintf(flot1,"2");
+			if (((DemandeA*)demande->data)->type==3)
+				fprintf(flot1,"3");
+		}
+		else
+		{
+			if (((DemandeA*)demande->data)->type==0)
+				fprintf(flot1,"0\n");
+			if (((DemandeA*)demande->data)->type==1)
+				fprintf(flot1,"1\n");
+			if (((DemandeA*)demande->data)->type==2)
+				fprintf(flot1,"2\n");
+			if (((DemandeA*)demande->data)->type==3)
+				fprintf(flot1,"3\n");
+		}	
+		demande=demande->suiv;
+	}
+}
+
+/*
+Nom : fSauvegardeLogement
+Finalité : sauvegarder dans le fichier logement.fic la liste de logements stockée en mémoire
+
+Description général :
+	tant que la liste de logements n'est pas vide
+		ecrit chacun de ses éléments dans le fichier logement.fic
+
+Variables :
+	logement 	liste des logements
+	*flot2 		fichier logement.fic
+*/
+void fSauvegardeLogement(Liste logement, FILE *flot2)
+{
+	while(vide(logement)==faux)
+	{	
+		fprintf(flot2,"%s\n%s\n",((Logement*)logement->data)->idLogement,((Logement*)logement->data)->nom);
+		if (((Logement*)logement->data)->type==0)
+			fprintf(flot2,"0\n");
+		if (((Logement*)logement->data)->type==1)
+			fprintf(flot2,"1\n");
+		if (((Logement*)logement->data)->type==2)
+			fprintf(flot2,"2\n");
+		if (((Logement*)logement->data)->type==3)
+			fprintf(flot2,"3\n");
+		if(((Logement*)logement->data)->dispo==vrai)
+			fprintf(flot2,"1\n");
+		else
+			fprintf(flot2,"0\n");
+		if(((Logement*)logement->data)->dispo==vrai && vide(logement->suiv)==vrai)
+		{
+			if (((Logement*)logement->data)->handicap==vrai)
+				fprintf(flot2,"1");
+			else
+				fprintf(flot2,"0");
+		}
+		else
+		{
+			if (((Logement*)logement->data)->handicap==vrai)
+				fprintf(flot2,"1\n");
+			else
+				fprintf(flot2,"0\n");
+		}	
+		if(((Logement*)logement->data)->dispo==faux)
+		{
+			if(vide(logement->suiv)==vrai)
+				fprintf(flot2,"%s",((Logement*)logement->data)->idEtud);
+			else
+				fprintf(flot2,"%s\n",((Logement*)logement->data)->idEtud);
+		}
+		logement=logement->suiv;
+	}
+}
+
+/*
+Nom : fSauvegardeEtudiant
+Finalité : sauvegarder dans le fichier etudiants.fic la liste d'étudiants stockée en mémoire
+
+Description général :
+	tant que la liste d'étudiants n'est pas vide
+		ecrit chacun de ses éléments dans le fichier étudiants.fic
+
+Variables :
+	etud 		liste des étudiants
+	*flot3 		fichier étudiants.fic
+*/
+void fSauvegardeEtudiant(Liste etud, FILE *flot3)
+{
+	while(vide(etud)==faux)
+	{
+		fprintf(flot3,"%s\n",((Etudiant*)etud->data)->idEtud);
+		if(((Etudiant*)etud->data)->civilite==faux)
+			fprintf(flot3,"0\n");
+		else
+			fprintf(flot3,"1\n");
+		fprintf(flot3,"%s\n%s\n",((Etudiant*)etud->data)->nom,((Etudiant*)etud->data)->prenom);
+		if(((Etudiant*)etud->data)->bourse==faux)
+			fprintf(flot3,"0\n");
+		else
+			fprintf(flot3,"1\n");
+		if(((Etudiant*)etud->data)->bourse==vrai)
+			fprintf(flot3,"%d\n",((Etudiant*)etud->data)->echelon);
+		if(vide(etud->suiv)==vrai)
+		{	
+			if(((Etudiant*)etud->data)->handicap==faux)
+				fprintf(flot3,"0");
+			else
+				fprintf(flot3,"1");
+		}
+		else
+			{	
+			if(((Etudiant*)etud->data)->handicap==faux)
+				fprintf(flot3,"0\n");
+			else
+				fprintf(flot3,"1\n");
+		}
+		etud=etud->suiv;
+	}
+}
+
+/*
+Nom : fSauvegarde
+Finalité : sauvegarder sur les 3 fichier .fic les 3 listes stockées en mémoire
+
+Description Général :
+	Ouvre le fichier de demande
+	sauvegarde la liste de demande dans le fichier de demande .fic
+	ferme le fichier de demande
+	fait de même pour la liste de logement puis d'étudiant
+
+Variables :
+	demande 	liste des demandes en attente
+	logement 	liste des logements
+	etud 		liste des étudiants
+*/
+void fSauvegarde(Liste demande, Liste logement, Liste etud){
+	FILE *flot1, *flot2, *flot3;
+	flot1=fopen("fichiers/demandesEnAttente.fic","w");
+	if(flot1==NULL)
+	{
+		printf("Problème ouverture demandes en attente\n");
+		exit(1);
+	}
+	fSauvegardeDemande(demande, flot1);
+	fclose(flot1);
+
+	flot2=fopen("fichiers/logement.fic","w");
+	if(flot2==NULL)
+	{
+		printf("Problème ouverture logement\n");
+		exit(1);
+	}
+	fSauvegardeLogement(logement, flot2);
+	fclose(flot2);
+
+	flot3=fopen("fichiers/etudiants.fic","w");
+	if(flot3==NULL)
+	{
+		printf("Problème d'ouverture etudiants");
+		exit(1);
+	}
+	fSauvegardeEtudiant(etud, flot3);
+	fclose(flot3);
 }
