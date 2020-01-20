@@ -70,6 +70,10 @@ Booleen saisieBooleen(void);
 //Q7
 Liste fAnnulDemande(Liste demande);
 //Q8
-void fDepartEtud(Liste logement);
+Liste supprimerEtud(Liste l, Liste *data);
+void fDepartEtud(Liste *logement, Liste *etud, Liste *demande);
 //Q9
+void fSauvegardeDemande(Liste demande, FILE *flot1);
+void fSauvegardeLogement(Liste logement, FILE *flot2);
+void fSauvegardeEtudiant(Liste etud, FILE *flot3);
 void fSauvegarde(Liste demande, Liste logement, Liste etud);
